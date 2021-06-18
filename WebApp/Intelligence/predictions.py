@@ -26,7 +26,7 @@ class VggProcess():
     def iterate_prediction(self, splittedImagesUrl):
 
         image_list = []
-        for filename in glob.glob('{}*jpg'.format(splittedImagesUrl))[:2]: #assuming jpg
+        for filename in glob.glob('{}*jpg'.format(splittedImagesUrl))[:]: #assuming jpg
             details = dict()
             img = image.load_img(filename,color_mode='rgb', target_size=(224, 224))
             arr = self.convert_tonumpy(img)

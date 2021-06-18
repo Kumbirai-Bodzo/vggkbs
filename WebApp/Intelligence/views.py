@@ -41,48 +41,18 @@ class IntelligenceView(APIView):
         file  = request.FILES['video']
     
         vprocess = VggProcess()
+        # uploading video
         vprocess.uploadVideo(file)
         
 
         # splitting video into images
         vprocess.split_images_from_video(self.splitedImagesUrl,self.srcVideoUrl)
-        #ret = vprocess.iterate_prediction(self.splitedImagesUrl,)
 
         return Response(dict(), status=200)
 
     def get(self, request):
 
-        #print(path)
-        #img_list = os.listdir(path)
-        #context = {"images": img_list}
-        # details =dict()
-        # arr = {'one':'two','three':'three'}
-
-        # details = dict(details, **arr)
-        # details = dict(details, **{'name':'https://'})
         vprocess = VggProcess()
         ret = vprocess.iterate_prediction(self.splitedImagesUrl,)
       
         return Response(ret, status =status.HTTP_200_OK)
-
-        
-
-
-        imageList = [
-            {
-        'n':'n1233',
-        'name':'cat',
-        'pred':'98',
-        'image_url': 'http://localhost:8000/static/splited/0.jpg'
-        
-        },
-        {
-        'n':'n1233',
-        'name':'cat',
-        'pred':'98',
-        'image_url': 'http://localhost:8000/static/splited/1.jpg'
-        
-        }]
-    
-        return Response(ret, status =status.HTTP_200_OK)
-
