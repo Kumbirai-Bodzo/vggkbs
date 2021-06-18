@@ -45,17 +45,21 @@ export class IntelligenceComponent implements OnInit {
         this.sweetAlert.success2('Uploaded video');
         this.uploading = false;
         this.uploaded = true;
-        this.uplodingValue = 100;
+        this.uplodingValue = 99;
       },
       (error) => {
         console.log(error);
         this.sweetAlert.error3('Failed uploading some images');
         this.uploading = false;
-         this.uplodingValue = 0;
+        this.uplodingValue = 0;
       }
     );
   }
+  refresh(){
+  window.location.reload();
+  }
   getProcessedImagesList(): any {
+  
     this.processedImagesList = null;
     this.intelligenceService.getProcessedImages().subscribe(
       (response) => {
