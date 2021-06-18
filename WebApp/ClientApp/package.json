@@ -35,7 +35,6 @@
     "firebase": "^7.24.0",
     "jquery": "^3.6.0",
     "mdbootstrap": "^4.19.2",
-    "ngx-videogular": "^10.1.0-0",
     "node-fetch": "^2.6.1",
     "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",

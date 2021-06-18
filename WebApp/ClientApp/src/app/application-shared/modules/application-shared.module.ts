@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimengSharedModules } from './primeng-shared.module';
 import { SharedComponentsModule } from './shared-components.module';
 import { SharedPipesModule } from './shared-pipes.module';
-import { VideogularModule } from './videogular.module';
 
 @NgModule({
   exports: [
@@ -14,7 +13,7 @@ import { VideogularModule } from './videogular.module';
     HttpClientModule,
     SharedPipesModule,
     SharedComponentsModule,
-    VideogularModule,
+    // VideogularModule,
     // BookingModule,
   ],
 
