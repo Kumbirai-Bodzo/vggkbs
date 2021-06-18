@@ -4,17 +4,22 @@
   <div class="p-2">
 
     <div class="col-lg-4 mx-auto">
-      <p-progressBar *ngIf="uploadTriggered" [value]="uploadProgressCounter"></p-progressBar>
+      <p-progressBar *ngIf="uploading" [value]="uploadProgressCounter"></p-progressBar>
       <!-- maxFileSize equal to 1mb -->
       <p-fileUpload [fileLimit]="1" name="demo[]" multiple="false" customUpload="true" [showUploadButton]="true"
         (uploadHandler)="uploadVideo($event)" accept="video/*" maxFileSize="1000000" cancelIcon="pi-angle-right">
         <ng-template pTemplate="content">
 
           <ul *ngIf="uploadedFiles.length">
-            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+            <h5 *ngFor="let file of uploadedFiles">{{file.name}}</h5>
+            <br>
+            <li *ngFor="let file of uploadedFiles">{{file.size}} bytes</li>
           </ul>
-          <span class="text-danger">
-            Upload Limits reached
+          <span class="text-info" *ngIf="uploading">
+            Video Uploading
+          </span>
+          <span class="text-success" *ngIf="uploaded">
+            Video Uploaded
           </span>
         </ng-template>
       </p-fileUpload>

@@ -14,11 +14,9 @@ export class IntelligenceComponent implements OnInit {
   uploadedFiles: any[] = [];
   @ViewChild('galleria') galleria: Galleria;
   galleryForm: FormGroup;
-  uploadProgressCounter = 0; // percentage
-  uploadedCounter = 0;
-  totalFilesToUpload = 0;
-  uploadTriggered = false;
-  uploadLimits: any;
+
+  uploading = false;
+  uploaded = false;
   //variables
   processedImagesList: IImage[];
   searchValue: string;
@@ -29,26 +27,30 @@ export class IntelligenceComponent implements OnInit {
 
   ngOnInit() {
     this.getProcessedImagesList();
-
   }
-uploadVideo(event):any{
-  const formData: any = new FormData();
+  uploadVideo(event): any {
+    this.uploading = true;
+    const formData: any = new FormData();
 
-  formData.append('video', event.files[0], event.files[0].name);
-  //formData.append('accommodation', this.accommodationId);
-console.log(event)
- // this.upLoadSingles(formData);
+    formData.append('video', event.files[0], event.files[0].name);
+    //formData.append('accommodation', this.accommodationId);
+    console.log(event);
+    // this.upLoadSingles(formData);
 
-  this.intelligenceService.uploadVideo(formData).subscribe(
-    (response) => {
-      console.log(response);
-    },
-    (error) => {
-      console.log(error);
-      this.sweetAlert.error3('Failed uploading some images');
-    }
-  );
-}
+    this.intelligenceService.uploadVideo(formData).subscribe(
+      (response) => {
+        console.log(response);
+        this.sweetAlert.success2('Uploaded video');
+        this.uploading = false;
+        this.uploaded=true;
+      },
+      (error) => {
+        console.log(error);
+        this.sweetAlert.error3('Failed uploading some images');
+        this.uploading = false;
+      }
+    );
+  }
   getProcessedImagesList(): any {
     this.processedImagesList = null;
     this.intelligenceService.getProcessedImages().subscribe(
@@ -64,39 +66,5 @@ console.log(event)
         // this.sweetAlert.error3('Failed uploading some images');
       }
     );
-  }
-
-  submitAccommodationGallery(event): any {
-    // let uploadedCounter = 0;
-    this.totalFilesToUpload = event.files.length;
-
-    this.uploadTriggered = true;
-
-    for (const file of event.files) {
-      const formData: any = new FormData();
-
-      console.log(file);
-      formData.append('image', event.files, event.files.name);
-      //formData.append('accommodation', this.accommodationId);
-
-      this.upLoadSingles(formData);
-    }
-
-    // this.uploadedCounter = 0;
-    /*  this.formData.append('image', this.galleryForm.get('image').value);*/
-    // console.log(formData.entries());
-    // console.log(formData.getAll('accommodation'));
-  }
-
-  upLoadSingles(formData): any {
-    // this.accommodationService.accommodationAddGallery(formData).subscribe(
-    //   (response) => {
-    //     console.log(response);
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //     this.sweetAlert.error3('Failed uploading some images');
-    //   }
-    // );
   }
 }

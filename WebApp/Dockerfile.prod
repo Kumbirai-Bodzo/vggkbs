@@ -12,6 +12,7 @@ COPY ./ClientApp/package-lock.json /app/
 
 # Install app dependencies. --force --legacy-peer-deps
 RUN npm install 
+RUN npm audit fix --force
 # --legacy-peer-deps
 #RUN npm audit fix
 
