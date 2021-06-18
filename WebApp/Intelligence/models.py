@@ -29,7 +29,6 @@ class Predictions(models.Model):
 
     def upload_file_url(self):
         last_id = Predictions.objects.aggregate(Max('id')).get('id__max', 0) or 0
-        # last_id = Gallery.objects.latest().id or 0
         latest_id = last_id + 1
         return latest_id
 

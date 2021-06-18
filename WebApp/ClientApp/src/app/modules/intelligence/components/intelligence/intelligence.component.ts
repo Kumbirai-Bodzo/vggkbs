@@ -18,6 +18,7 @@ export class IntelligenceComponent implements OnInit {
   uploading = false;
   uploaded = false;
   uplodingValue;
+  predicting= false;
   //variables
   processedImagesList: IImage[];
   searchValue: string;
@@ -27,7 +28,7 @@ export class IntelligenceComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getProcessedImagesList();
+    //this.getProcessedImagesList();
   }
   uploadVideo(event): any {
     this.uploading = true;
@@ -56,22 +57,25 @@ export class IntelligenceComponent implements OnInit {
     );
   }
   refresh(){
-  window.location.reload();
+  //window.location.reload();
+  this.getProcessedImagesList();
   }
   getProcessedImagesList(): any {
-  
+  this.predicting = true;
     this.processedImagesList = null;
     this.intelligenceService.getProcessedImages().subscribe(
       (response) => {
         console.log('my resoinse');
         console.log(response);
         this.processedImagesList = response;
-        // this.uploadLimits = response;
-        // this.imageList = response;
+   
+        this.predicting = false;
+          this.sweetAlert.error2('predicted');
       },
       (error) => {
         console.log(error);
-        // this.sweetAlert.error3('Failed uploading some images');
+        this.predicting = false;
+        this.sweetAlert.error3('prediction failed');
       }
     );
   }

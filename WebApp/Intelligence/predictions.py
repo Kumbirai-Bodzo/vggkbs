@@ -26,14 +26,14 @@ class VggProcess():
     def iterate_prediction(self, splittedImagesUrl):
 
         image_list = []
-        for filename in glob.glob('{}*jpg'.format(splittedImagesUrl))[:2]: #assuming gif
+        for filename in glob.glob('{}*jpg'.format(splittedImagesUrl))[:2]: #assuming jpg
             details = dict()
             img = image.load_img(filename,color_mode='rgb', target_size=(224, 224))
             arr = self.convert_tonumpy(img)
             values = self.predict_images(arr)
-            values2= {'n':'n1233',
-            'name':'cat',
-                'pred':'98',}
+            # values2= {'n':'n1233',
+            # 'name':'cat',
+            #     'pred':'98',}
             
             host_path = '{}/static/splited/{}'.format(settings.CUSTOM_IMAGES_HOST_URL, os.path.basename(filename)) 
 
@@ -42,9 +42,6 @@ class VggProcess():
             details = dict(details, **{'image_url':host_path})
     
             image_list.append(details)
-
-            
-                # return Response(file_serializer.data, status=status.HTTP_201_CREATED)
             
         return image_list
 

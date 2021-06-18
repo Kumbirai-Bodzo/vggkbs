@@ -7,8 +7,9 @@
     <div class="col-md-6 col-11 mx-auto">
 
       <!-- maxFileSize equal to 1mb -->
-      <p-fileUpload [fileLimit]="1" name="video[]" [style]="{'width':'100%'}" multiple="multiple" customUpload="true" [showUploadButton]="true"
-        (uploadHandler)="uploadVideo($event)" accept="video/*" maxFileSize="1000000" cancelIcon="pi-angle-right">
+      <p-fileUpload [fileLimit]="1" name="video[]" [style]="{'width':'100%'}" multiple="multiple" customUpload="true"
+        [showUploadButton]="true" (uploadHandler)="uploadVideo($event)" accept="video/*" maxFileSize="1000000"
+        cancelIcon="pi-angle-right">
         <ng-template pTemplate="content">
 
 
@@ -18,7 +19,7 @@
             <li *ngFor="let file of uploadedFiles">{{file.size}} bytes</li>
           </ul> -->
 
-          
+
           <p-progressBar [value]="uplodingValue"></p-progressBar>
           <span class="text-info h5 h5-responsive" *ngIf="uploading">
             Video Uploading
@@ -42,7 +43,15 @@
     <div class="col-6 m-auto">
       <input [(ngModel)]="searchValue" class="form-control" type="text" placeholder="Search Image" aria-label="Search">
 
-      <button class="btn btn-mdb-color text-white ml-0" (click)=" refresh()">Get Predictions</button>
+      <button class="btn btn-mdb-color text-white ml-0" (click)=" refresh()">Get Predictions
+
+      </button>
+<!-- *ngIf="predicting" -->
+      <span  *ngIf="predicting">(Processing) 
+
+
+        <i class="fas animated swing faster fa-ellipsis-h infinite"></i>
+      </span>
     </div>
 
   </section>
@@ -53,7 +62,7 @@
       <!-- Card -->
 
       <div *ngFor="let image of processedImagesList | ImageListFilter: searchValue"
-        class="card col-lg-2 col-sm-4 p-0 mx-auto my-1">
+        class="card col-lg-3 col-sm-4 p-0 mx-auto my-1">
 
         <!-- Card image -->
         <div class="view overlay">
@@ -71,8 +80,8 @@
           <!-- Title -->
           <h4 class="card-title p-2 my-0 font-weight-bold">{{image.name}}</h4>
           <span class="badge badge-primary p-3 mr-1 mb-1">pred: {{image.pred}}</span>
-
-          <span class="badge badge-primary p-3 m-">n: {{image.n}}</span>
+  <h5 class="badg badge-primar p-3 m- h5 h5-responsive">n: {{image.pred}}</h5>
+          <h5 class="badg badge-primar p-3 m- h5 h5-responsive">n: {{image.n}}</h5>
 
         </div>
 
