@@ -70,7 +70,7 @@ export class IntelligenceComponent implements OnInit {
         this.processedImagesList = response;
    
         this.predicting = false;
-          this.sweetAlert.error2('predicted');
+          this.sweetAlert.success('predicted');
       },
       (error) => {
         console.log(error);
