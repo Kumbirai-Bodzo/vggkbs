@@ -1,6 +1,7 @@
 <!-- Search form -->
 
 <div class="d-flex flex-column-reverse">
+
   <div class="p-2">
 
     <div class="col-md-6 col-11 mx-auto">
@@ -10,11 +11,14 @@
         (uploadHandler)="uploadVideo($event)" accept="video/*" maxFileSize="1000000" cancelIcon="pi-angle-right">
         <ng-template pTemplate="content">
 
+
           <!-- <ul *ngIf="uploadedFiles.length">
             <h5 *ngFor="let file of uploadedFiles">{{file.name}}</h5>
-           
+          
             <li *ngFor="let file of uploadedFiles">{{file.size}} bytes</li>
           </ul> -->
+
+          
           <p-progressBar [value]="uplodingValue"></p-progressBar>
           <span class="text-info h5 h5-responsive" *ngIf="uploading">
             Video Uploading
