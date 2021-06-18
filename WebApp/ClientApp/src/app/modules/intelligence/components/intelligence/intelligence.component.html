@@ -46,8 +46,8 @@
       <button class="btn btn-mdb-color text-white ml-0" (click)=" refresh()">Get Predictions
 
       </button>
-<!-- *ngIf="predicting" -->
-      <span  *ngIf="predicting">(Processing) 
+      <!-- *ngIf="predicting" -->
+      <span *ngIf="predicting">(Processing)
 
 
         <i class="fas animated swing faster fa-ellipsis-h infinite"></i>
@@ -62,7 +62,7 @@
       <!-- Card -->
 
       <div *ngFor="let image of processedImagesList | ImageListFilter: searchValue"
-        class="card col-lg-3 col-sm-4 p-0 mx-auto my-1">
+        class="card col-lg-4 col-sm-4 p-0 mx-auto my-1">
 
         <!-- Card image -->
         <div class="view overlay">
@@ -79,8 +79,8 @@
 
           <!-- Title -->
           <h4 class="card-title p-2 my-0 font-weight-bold">{{image.name}}</h4>
-          <span class="badge badge-primary p-3 mr-1 mb-1">pred: {{image.pred}}</span>
-  <h5 class="badg badge-primar p-3 m- h5 h5-responsive">n: {{image.pred}}</h5>
+
+          <h5 class="badg badge-primar p-3 m- h5 h5-responsive">pred: {{image.pred}}</h5>
           <h5 class="badg badge-primar p-3 m- h5 h5-responsive">n: {{image.n}}</h5>
 
         </div>
@@ -94,7 +94,7 @@
 
       </div>
 
-      <app-skeleton-card *ngIf="!processedImagesList" class="m-auto" [iterations]="3"></app-skeleton-card>
+      <app-skeleton-card *ngIf="!processedImagesList && predicting" class="m-auto" [iterations]="3"></app-skeleton-card>
     </section>
 
 
