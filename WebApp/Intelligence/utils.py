@@ -64,7 +64,7 @@ class VggProcess():
     def predict_images(self, nparr):
         model = VGG16(weights='imagenet')
         x = preprocess_input(nparr)
-        features = model.predict(nparr)
+        features = model.predict(x)
         p = decode_predictions(features)
         print(p[0][0][1])
         

@@ -5,7 +5,7 @@
 
     <div class="col-lg-4 mx-auto">
       <p-progressBar *ngIf="uploadTriggered" [value]="uploadProgressCounter"></p-progressBar>
-
+      <!-- maxFileSize equal to 1mb -->
       <p-fileUpload [fileLimit]="1" name="demo[]" multiple="false" customUpload="true" [showUploadButton]="true"
         (uploadHandler)="uploadVideo($event)" accept="video/*" maxFileSize="1000000" cancelIcon="pi-angle-right">
         <ng-template pTemplate="content">
