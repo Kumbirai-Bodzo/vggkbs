@@ -17,6 +17,7 @@ export class IntelligenceComponent implements OnInit {
 
   uploading = false;
   uploaded = false;
+  uplodingValue;
   //variables
   processedImagesList: IImage[];
   searchValue: string;
@@ -30,6 +31,7 @@ export class IntelligenceComponent implements OnInit {
   }
   uploadVideo(event): any {
     this.uploading = true;
+    this.uplodingValue = 50;
     const formData: any = new FormData();
 
     formData.append('video', event.files[0], event.files[0].name);
@@ -42,12 +44,14 @@ export class IntelligenceComponent implements OnInit {
         console.log(response);
         this.sweetAlert.success2('Uploaded video');
         this.uploading = false;
-        this.uploaded=true;
+        this.uploaded = true;
+        this.uplodingValue = 100;
       },
       (error) => {
         console.log(error);
         this.sweetAlert.error3('Failed uploading some images');
         this.uploading = false;
+         this.uplodingValue = 0;
       }
     );
   }
