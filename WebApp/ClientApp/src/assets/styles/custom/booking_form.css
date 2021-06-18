@@ -1,0 +1,106 @@
+
+
+#booking_form .card {
+    margin: auto;
+    border: solid 1px #dbdad7;
+    width: 60%;
+    padding-left: 10px !important;
+    padding-bottom: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 0px !important
+}
+
+#booking_form .card-title {
+    margin: auto;
+    padding: 15px;
+    background-color: #2f7fad;
+    color: white;
+    width: 80%
+}
+
+#booking_form div.card-body {
+    padding: 0px
+}
+
+#booking_form .custom-select {
+    width: 100%
+}
+
+#booking_form .btn2 {
+    margin-left: 10%
+}
+
+#booking_form input {
+    outline: 0 !important;
+    border-width: 0 0 2px !important;
+    border-color: #d1d1cf !important
+}
+
+#booking_form input:focus {
+    border-color: #d1d1cf !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important
+}
+
+#booking_form select {
+    outline: 0 !important;
+    border-width: 0 0 2px !important;
+    border-color: #d1d1cf !important
+}
+
+#booking_form select:focus {
+    border-color: #d1d1cf !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important
+}
+
+#booking_form .radiobtn {
+    margin-left: 3.5%
+}
+
+#booking_form .icons {
+    margin: auto !important
+}
+
+#booking_form .fa {
+    border-radius: 25px;
+    width: 10%;
+    margin-left: 5%;
+    border: solid 2px #dbdad7;
+    margin-top: 5%;
+    text-align: center
+}
+
+#booking_form .fa-plane {
+    color: #1cad9f
+}
+
+#booking_form .fa-taxi {
+    color: #c2f700
+}
+
+#booking_form .fa-train {
+    color: red
+}
+
+@media only screen and (max-width: 600px) {
+ #booking_form .card {
+        margin: auto;
+        border: solid 1px #dbdad7;
+        width: 90%;
+        padding-left: 10px !important;
+        padding-bottom: 10px !important;
+        padding-right: 10px !important;
+        padding-top: 0px !important
+    }
+
+    #booking_form .fa {
+        border-radius: 25px;
+        width: 15%;
+        margin-left: 5%;
+        border: solid 2px #dbdad7;
+        margin-top: 5%;
+        text-align: center
+    }
+}
+

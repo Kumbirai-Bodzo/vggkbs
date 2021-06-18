@@ -1,0 +1,85 @@
+<!-- Search form -->
+
+<div class="d-flex flex-column-reverse">
+  <div class="p-2">
+
+    <div class="col-lg-4 mx-auto">
+      <p-progressBar *ngIf="uploadTriggered" [value]="uploadProgressCounter"></p-progressBar>
+
+      <p-fileUpload [fileLimit]="1" name="demo[]" multiple="false" customUpload="true" [showUploadButton]="true"
+        (uploadHandler)="uploadVideo($event)" accept="video/*" maxFileSize="1000000" cancelIcon="pi-angle-right">
+        <ng-template pTemplate="content">
+
+          <ul *ngIf="uploadedFiles.length">
+            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+          </ul>
+          <span class="text-danger">
+            Upload Limits reached
+          </span>
+        </ng-template>
+      </p-fileUpload>
+
+    </div>
+
+
+  </div>
+</div>
+
+<div class="p-2 container">
+  <!-- Search Bar -->
+  <section class="row">
+    <div class="col-6 m-auto">
+      <input [(ngModel)]="searchValue" class="form-control" type="text" placeholder="Search Image" aria-label="Search">
+
+      <button class="btn btn-primary" (click)="getProcessedImagesList()">Get Predictions</button>
+    </div>
+
+  </section>
+  <!-- End Search Bar -->
+  <div class="p-2 container">
+
+    <section class="row">
+      <!-- Card -->
+
+      <div *ngFor="let image of processedImagesList | ImageListFilter: searchValue"
+        class="card col-lg-2 col-sm-4 p-0 mx-auto my-1">
+
+        <!-- Card image -->
+        <div class="view overlay">
+          <img class="card-img-top" style="height: 100%;object-fit: cover;" [src]="image.image_url"
+            alt="Card image cap">
+          <a>
+            <div class="mask rgba-white-slight"></div>
+
+          </a>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body">
+
+          <!-- Title -->
+          <h4 class="card-title p-2 my-0 font-weight-bold">{{image.name}}</h4>
+          <span class="badge badge-primary p-3 mr-1 mb-1">pred: {{image.pred}}</span>
+
+          <span class="badge badge-primary p-3 m-">n: {{image.n}}</span>
+
+        </div>
+
+      </div>
+      <!-- Card -->
+
+      <div class="col-auto jumbotron mt-5 mx-auto blue white-text"
+        *ngIf="(processedImagesList | ImageListFilter: searchValue).length ===0 && searchValue">
+        No images found in search list
+
+      </div>
+
+      <app-skeleton-card *ngIf="!processedImagesList" class="m-auto" [iterations]="3"></app-skeleton-card>
+    </section>
+
+
+  </div>
+
+
+
+</div>

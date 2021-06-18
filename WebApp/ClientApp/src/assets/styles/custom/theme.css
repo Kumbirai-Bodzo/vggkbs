@@ -1,0 +1,64 @@
+body,
+html {
+	height: 90%;
+}
+main{
+    margin-top:90px;
+}
+
+body {
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.navbar {
+	background-color: rgba(212, 231, 240, 0.349);
+}
+
+/* Lists and links*/
+ul li a {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+}
+
+nav ul li a.current {
+	background-color: rgb(255, 255, 255);
+}
+
+li {
+	border-radius: 5px;
+}
+
+nav ul li a:hover {
+	border-color: #33b5e5;
+	border-style: solid;
+	border-width: 0px 0px 5px 0px;
+
+	animation-name: animation;
+	animation-duration: 3s;
+	transition-property: unset;
+
+	animation-fill-mode: forwards;
+	animation-timing-function: ease-in-out;
+}
+
+a.share:hover {
+	color: #33b5e5;
+
+	animation-name: animation;
+	animation-duration: 3s;
+	transition-property: unset;
+
+	animation-fill-mode: forwards;
+	animation-timing-function: ease-in-out;
+}
+a {
+	color: #224455;
+	font-family: Constantia, 'Lucida Bright', 'DejaVu Serif', Georgia, 'serif';
+}
+
+.btn-create {
+	background-color: #33b5e5;
+	color: white;
+}
+
+
