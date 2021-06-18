@@ -6,6 +6,8 @@ from django.core.mail import send_mail
 from django.urls import include, path, re_path
 from django.views.generic import RedirectView, TemplateView
 
+
+
 urlpatterns = [
 
     path('admin/', admin.site.urls),

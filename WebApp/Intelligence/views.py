@@ -17,7 +17,8 @@ from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from tensorflow.keras.preprocessing import image
 
-from Intelligence.utils import VggProcess, create_directory
+from Intelligence.predictions import VggProcess
+from Intelligence.utils import create_directory
 
 
 # Create your views here.
@@ -32,14 +33,16 @@ class IntelligenceView(APIView):
     splitedImagesUrl = settings.MEDIA_ROOT+ "\\splited\\"
 
     def post(self, request):
+
+        
         create_directory(self.path+ 'videos')
         create_directory(self.path+ 'splited')
  
         file  = request.FILES['video']
- 
-
+    
         vprocess = VggProcess()
         vprocess.uploadVideo(file)
+        
 
         # splitting video into images
         vprocess.split_images_from_video(self.splitedImagesUrl,self.srcVideoUrl)
@@ -52,13 +55,14 @@ class IntelligenceView(APIView):
         #print(path)
         #img_list = os.listdir(path)
         #context = {"images": img_list}
-        details =dict()
-        arr = {'one':'two','three':'three'}
+        # details =dict()
+        # arr = {'one':'two','three':'three'}
 
-        details = dict(details, **arr)
-        details = dict(details, **{'name':'https://'})
+        # details = dict(details, **arr)
+        # details = dict(details, **{'name':'https://'})
         vprocess = VggProcess()
         ret = vprocess.iterate_prediction(self.splitedImagesUrl,)
+      
         return Response(ret, status =status.HTTP_200_OK)
 
         

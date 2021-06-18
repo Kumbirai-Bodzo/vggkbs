@@ -1,14 +1,12 @@
-import time
 
 import pandas as pd
-from django.contrib.auth.models import User
 from rest_framework import serializers
 
+from Intelligence.models import Predictions
+# from ..models import Intelligence
 
-class IntelligenceSerializer(serializers.ModelSerializer):
+
+class PredictionsSerializer(serializers.ModelSerializer):
     class Meta:
-        # model = Accommodation
-        fields = ['id','landlord','name','type',
-        'period', 'baths', 'address','included', 'rules', 'payment_methods']
-
-
+        model = Predictions
+        fields = ['id','n','pred','image']

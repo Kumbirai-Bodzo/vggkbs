@@ -158,20 +158,14 @@ WSGI_APPLICATION = 'Configurations.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('DB_DATABASE_NAME', 'adventurebookings_db'),
+        'NAME': os.environ.get('DB_DATABASE_NAME', 'vggkbs_db'),
         'USER': os.environ.get('DB_USERNAME', 'postgres'),
         'PASSWORD': os.environ.get('DB_PASSWORD', '6699'),
         'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '5432'),
     },
-    #    'default2': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # } victoria_bookings2
+ 
 }
-
-#GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = os.path.join(BASE_DIR,'Configurations', 'gdrive.json')
-#GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = 'static_cdn/media_root' # OPTIONAL
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -186,12 +180,6 @@ AUTH_PASSWORD_VALIDATORS = [
             'min_length': 4,
         }
     },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    # },
-    # {
-    # 'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    # },
 ]
 
 
