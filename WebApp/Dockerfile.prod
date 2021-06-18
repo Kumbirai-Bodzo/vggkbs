@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Copy app dependencies.
 COPY ./ClientApp/package.json /app/
-#COPY ./ClientApp/package-lock.json /app/
+COPY ./ClientApp/package-lock.json /app/
 
 # Install app dependencies. --force --legacy-peer-deps
 RUN npm install --legacy-peer-deps
