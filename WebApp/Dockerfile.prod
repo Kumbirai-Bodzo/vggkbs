@@ -32,6 +32,10 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /app
 WORKDIR /app
 COPY requirements.txt /app/
+
+RUN apt-get update && apt-get install -y python3-opencv
+RUN pip install opencv-python
+
 RUN pip install dj-database-url
 RUN pip install -r requirements.txt
 
