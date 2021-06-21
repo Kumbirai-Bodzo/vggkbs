@@ -21,19 +21,12 @@ from datetime import timedelta
 from corsheaders.defaults import default_headers
 from django.conf import settings
 
-from .mini_settings.custom_ckeditor import *
 from .mini_settings.rest_framework_settings import *
-from .mini_settings.social_accounts_settings import *
 
-# Build paths inside the project like this: os.path.join(BASE_DIR,
 # Preferances
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR  = os.path.join(BASE_DIR,'../')
-# print(BASE_DIR)
-#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))+'/settings2/../'
-#BASE_DIR  = os.path.join(BASE_DIR,'../')
 
-#FILE_STORAGE= GoogleDriveStorage()
 # Quick-start development settings - unsuitable for production
 # See
 # https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -85,32 +78,23 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-#'django.contrib.sites',
     'django.contrib.staticfiles',
     'corsheaders',
     'ckeditor',
     'ckeditor_uploader',
     'webpack_loader',
-    #'rest_framework_swagger',
     'cloudinary',
     'cloudinary_storage',
-    #'dbbackup',
-   # 'address',
-    # 'address',
-    # 'places',
-    # 'core',
-    #'gdstorage'
+  
 ]
-# DJANGO_ADDRESS_COUNTRY_MODEL = "Share.Countr"
+
 # Adding Django Apps
 
 INSTALLED_APPS += AUTHENTICATION_REST_APPS
 INSTALLED_APPS += CUSTOM_APPS
 
-# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 TEMPLATE_CONTEXT_PROCESSORS = (
     ...,
-    # 'allauth.account.context_processors.account',
     'allauth.socialaccount.context_processors.socialaccount',
     "module.context_processors.site",
     ...
@@ -213,7 +197,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    # os.path.join(BASE_DIR, 'Frontend/static/dist/', 'static'),
     os.path.join(BASE_DIR, 'ClientApp/distro/'),
     os.path.join(BASE_DIR, 'ClientApp/distro/dist/', 'static'),
     os.path.join(BASE_DIR, 'static_cdn', 'media_root'),
