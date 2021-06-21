@@ -7,6 +7,7 @@ import pandas as pd
 from django.conf import settings
 from django.core.files.base import ContentFile, File
 from django.core.files.storage import FileSystemStorage, default_storage
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.dispatch import receiver
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -87,9 +88,10 @@ class VggProcess():
 
         return dict
 
-    def split_images_from_video(self, splitedImagesUrl, srcVideoUrl):
+    def split_images_from_video(self,request, splitedImagesUrl, srcVideoUrl):
         print('_______________________')
         vidcap = cv2.VideoCapture(srcVideoUrl)
+        print(vidcap)
 
         print('reading images from video')
         currentframe = 0
@@ -103,14 +105,69 @@ class VggProcess():
                 # if video is still left continue creating images
                 name = splitedImagesUrl + str(currentframe) + '.jpg'
                 #print ('Creating...' + name)
-                print(str(currentframe)+'.jpg')
+                
+
+                # mg = image.load_img(frame,color_mode='rgb', target_size=(224, 224))
+                #ret,jpeg = cv2.imencode('.jpg', frame)
+                #print(jpeg.tobytes())
+                # import io
+                # 
+                # image = Image.open(io.BytesIO(jpeg.tobytes()))
+                # import PIL.Image as Image
+                # from django.core.files.uploadedfile import InMemoryUploadedFile
+
+                # img_pill = Image.fromarray(frame, 'RGB')
+          
+                # img = InMemoryUploadedFile(img_pill, None, 'foo.jpg', 'image/jpeg', img_pill.tell, None)
+                # request.FILES['image'] = img
+                from cloudinary import CloudinaryImage
+
+                # c = CloudinaryImage(img)
+                #print(c)
+                #cv2.imwrite(name, frame)
+                ret, buf = cv2.imencode('.jpg', frame) # cropped_image: cv2 / np array
+                content = ContentFile(buf.tobytes())
+                p =  Prediction()
+                p.file.save('{}.jpg'.format(currentframe), content)
+                print(content)
+
+
+                print(name)
+                currentframe += 1
+                # break
+            
+
+                # data = {
+                #     'image': content , #CloudinaryImage(name).image(secure=True),
+                #      'name': 'name',
+                # 'pred': '0',
+                # 'n':'0'
+                # }
+                 
+
+                # file_serializer = PredictionSerializer(data =data)
+                # if file_serializer.is_valid():
+                #     file_serializer.save()
+                #     break
+
+                #     if os.path.exists(name):
+                #         #os.remove(name)
+                #         #break
+                #         pass
+                    
+
+                    #return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+                # print(file_serializer.errors)
+            
         
                 # writing the extracted images
-                cv2.imwrite(name, frame)
+                # 
+        
+                # print(r)
         
                 # increasing counter so that it will
                 # show how many frames are created
-                currentframe += 1
+                
             else:
                 print('nothing to read now.')
                 break

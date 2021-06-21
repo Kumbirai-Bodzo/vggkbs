@@ -1,4 +1,3 @@
-from django.core.files.storage import FileSystemStorage
 
 from .base_settings import *
 
@@ -20,8 +19,21 @@ CUSTOM_ACCOUNT_CONFIRM_EMAIL_URL = CUSTOM_FRONTEND_SITE_URL + "/auth/set/account
 # DEFAULT_FILE_STORAGE = FileSystemStorage(location=settings.MEDIA_ROOT)
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'elitecode',
     'API_KEY': '488823284154167',
     'API_SECRET': 'SGVVIikZyAXkFO5jZXHYyvdOryI',
     }
+
+
+import cloudinary
+import cloudinary.api
+import cloudinary.uploader
+
+cloudinary.config( 
+  cloud_name ='elitecode',
+  api_key = '488823284154167',
+  api_secret = 'SGVVIikZyAXkFO5jZXHYyvdOryI',
+
+)

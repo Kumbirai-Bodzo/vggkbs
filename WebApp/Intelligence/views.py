@@ -17,7 +17,9 @@ from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from tensorflow.keras.preprocessing import image
 
+from Intelligence.models import Prediction, Video
 from Intelligence.predictions import VggProcess
+from Intelligence.serializers.video_serializer import VideoSerializer
 from Intelligence.utils import create_directory
 
 
@@ -33,26 +35,50 @@ class IntelligenceView(APIView):
     splitedImagesUrl = settings.MEDIA_ROOT+ "\\splited\\"
 
     def post(self, request):
+        # file  = request.FILES['video']
+        data = request.data
+        file_serializer = VideoSerializer(data=data)
+
+        # accommodation
 
         
-        create_directory(self.path+ 'videos')
-        create_directory(self.path+ 'splited')
+        if file_serializer.is_valid():
+            file_serializer.save()
+            video = Video.objects.last()
+            Prediction.objects.all().delete()
+            vprocess = VggProcess()
+            
+            vprocess.split_images_from_video(request, self.splitedImagesUrl,video.file.url)
+            return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+        print(file_serializer.errors)
+
+
+
+        
+        # create_directory(self.path+ 'videos')
+        # create_directory(self.path+ 'splited')
  
-        file  = request.FILES['video']
+        # 
     
-        vprocess = VggProcess()
-        # uploading video
-        vprocess.uploadVideo(file)
+        # vprocess = VggProcess()
+        # # uploading video
+        # vprocess.uploadVideo(file)
         
 
-        # splitting video into images
-        vprocess.split_images_from_video(self.splitedImagesUrl,self.srcVideoUrl)
+        # # splitting video into images
+        # vprocess.split_images_from_video(self.splitedImagesUrl,self.srcVideoUrl)
 
         return Response(dict(), status=200)
 
     def get(self, request):
+        create_directory(self.path+ 'splited')
 
         vprocess = VggProcess()
-        ret = vprocess.iterate_prediction(self.splitedImagesUrl,)
+        #ret = vprocess.iterate_prediction(self.splitedImagesUrl,)
+        ret = {}
+        video = Video.objects.last()
+        print(video.file.url)
+        vprocess.split_images_from_video(request, self.splitedImagesUrl,video.file.url)
+
       
         return Response(ret, status =status.HTTP_200_OK)

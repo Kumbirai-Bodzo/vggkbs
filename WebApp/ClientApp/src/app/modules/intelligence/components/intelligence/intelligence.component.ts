@@ -35,7 +35,7 @@ export class IntelligenceComponent implements OnInit {
     this.uplodingValue = 50;
     const formData: any = new FormData();
 
-    formData.append('video', event.files[0], event.files[0].name);
+    formData.append('file', event.files[0], event.files[0].name);
     //formData.append('accommodation', this.accommodationId);
     console.log(event);
     // this.upLoadSingles(formData);
