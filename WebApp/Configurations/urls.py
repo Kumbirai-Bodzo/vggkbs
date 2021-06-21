@@ -11,13 +11,7 @@ from django.views.generic import RedirectView, TemplateView
 urlpatterns = [
 
     path('admin/', admin.site.urls),
-   path('api/intelligence/', include('Intelligence.urls')),
-  #  path('api/shared/', include('Shared.urls')), 
-  #  path('api/auth/', include('Authentication.urls')),
-  #  path('api/accommodation/', include('Accommodation.urls')),
-   # path('api/transport/', include('Transport.urls')),
-   # path('', include('Shop.urls')),  
-    
+   path('api/intelligence/', include('Intelligence.urls')),   
 ]
 
 urlpatterns += staticfiles_urlpatterns()
@@ -30,16 +24,4 @@ urlpatterns += static(settings.STATIC_URL,
 
 urlpatterns += [
 re_path(r'^(?P<path>.*)$', TemplateView.as_view(template_name='angular.html'), name="home"),
-   # url(r'^.*', TemplateView.as_view(template_name='angular.html'), name="home"),
-  # url(r'^.*', TemplateView.as_view(template_name='angular.html'), name="home"),
 ]
-
-
-'''subject = 'Some subject'
-from_email = settings.CUSTOM_DEFAULT_FROM_EMAIL
-message = 'This is my test message'
-recipient_list = ['bodzok@gmail.com']
-html_message = '<h1>This is my HTML test</h1>'''
-
-# send_mail(subject, message, from_email, recipient_list, fail_silently=False, html_message=html_message)
-# handler404 = vf.serve_angular
