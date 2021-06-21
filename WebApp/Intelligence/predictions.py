@@ -66,8 +66,15 @@ class VggProcess():
         #vgg16_weights = 'models/vgg16_weights_tf_dim_ordering_tf_kernels.h5'
 
         # model = VGG16(weights='imagenet')
-        
-        model = VGG16(weights = vgg16_weights)
+        model = None
+
+        try: 
+            model = VGG16(weights = vgg16_weights)
+
+        except Exception as e:
+            model = VGG16(weights='imagenet')
+            
+
         print(model)
         x = preprocess_input(nparr)
         features = model.predict(x)
@@ -121,7 +128,7 @@ class VggProcess():
                     return full_path
         delete_existing()
         fs = FileSystemStorage()
-        filename = fs.save('uploaded/uploaded_video.mp4', file)
+        fs.save('uploaded/uploaded_video.mp4', file)
         # uploaded_file_url = fs.url(filename)
         # print(uploaded_file_url)
         return 'video saved'
