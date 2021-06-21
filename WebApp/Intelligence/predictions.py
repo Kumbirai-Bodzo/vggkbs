@@ -103,6 +103,7 @@ class VggProcess():
                 # if video is still left continue creating images
                 name = splitedImagesUrl + str(currentframe) + '.jpg'
                 #print ('Creating...' + name)
+                print(str(currentframe)+'.jpg')
         
                 # writing the extracted images
                 cv2.imwrite(name, frame)
