@@ -20,6 +20,7 @@ from datetime import timedelta
 # import cloudinary
 from corsheaders.defaults import default_headers
 from django.conf import settings
+from Intelligence.utils import create_directory
 
 from .mini_settings.rest_framework_settings import *
 
@@ -196,11 +197,15 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_URL = '/static/'
 
+#create_directory(os.path.join(BASE_DIR, 'static'))
+
+create_directory( os.path.join(BASE_DIR, 'static_cdn', 'media_root'))
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'ClientApp/distro/'),
     os.path.join(BASE_DIR, 'ClientApp/distro/dist/', 'static'),
     os.path.join(BASE_DIR, 'static_cdn', 'media_root'),
-    os.path.join(BASE_DIR, 'static'),
+    # os.path.join(BASE_DIR, 'static'),
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn', 'static_root')

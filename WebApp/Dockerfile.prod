@@ -54,7 +54,7 @@ COPY --from=builder /app/distro/dist/ ClientApp/distro/dist
 
 
 # RUN python3 manage.py migrate  --settings=Configurations.settings_prod
-# RUN python3 manage.py collectstatic --settings=Configurations.settings.settings_prod
+RUN python3 manage.py collectstatic --settings=Configurations.settings.settings_prod
 
 EXPOSE 5432
 EXPOSE 8000
