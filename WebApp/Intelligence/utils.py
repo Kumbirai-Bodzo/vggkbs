@@ -13,7 +13,7 @@ def create_directory(name):
 def file_upload_path(instance, filename):
     file_array = filename.split('.')
     extension = file_array[1]
-    file_name = 'splited//{0}.{1}'.format(
+    file_name = '{0}.{1}'.format(
        instance.upload_file_url(), extension)
     #  
     print(instance.upload_file_url())

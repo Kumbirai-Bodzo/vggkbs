@@ -16,5 +16,12 @@ CUSTOM_FRONTEND_SITE_URL = 'http://localhost:4200'
 CUSTOM_PASSWORD_RESET_PAGE_URL = CUSTOM_FRONTEND_SITE_URL + '/auth/set/password-confirm-reset/confirm'
 
 CUSTOM_ACCOUNT_CONFIRM_EMAIL_URL = CUSTOM_FRONTEND_SITE_URL + "/auth/set/account-confirm-email/?key={0}"
-FILE_STORAGE = FileSystemStorage(location=settings.MEDIA_ROOT)
-DEFAULT_FILE_STORAGE = FileSystemStorage(location=settings.MEDIA_ROOT)
+# FILE_STORAGE = FileSystemStorage(location=settings.MEDIA_ROOT)
+# DEFAULT_FILE_STORAGE = FileSystemStorage(location=settings.MEDIA_ROOT)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'elitecode',
+    'API_KEY': '488823284154167',
+    'API_SECRET': 'SGVVIikZyAXkFO5jZXHYyvdOryI',
+    }

@@ -7,10 +7,21 @@ from imagekit.processors import ResizeToCover
 from rest_framework import serializers
 
 from Intelligence.utils import file_upload_path
+from Intelligence.validators import validate_file_extension
+
 
 # Create your models here.
+class Video(models.Model):
+    id = models.AutoField(primary_key =True)
+    file = models.FileField(upload_to=file_upload_path, validators=[validate_file_extension],
+                           null=False, blank=True,)
 
-class Predictions(models.Model):
+    def upload_file_url(self):
+        last_id = Video.objects.aggregate(Max('id')).get('id__max', 0) or 0
+        latest_id = last_id + 1
+        return '//video//{0}'.format(latest_id)
+
+class Prediction(models.Model):
     id = models.AutoField(primary_key=True)
     name =  models.CharField(max_length=255,blank=True)
     pred =  models.CharField(max_length=255,blank=True)
@@ -28,9 +39,9 @@ class Predictions(models.Model):
         return '{0}//{1}'.format(settings.CUSTOM_IMAGES_HOST_URL, self.image.url)
 
     def upload_file_url(self):
-        last_id = Predictions.objects.aggregate(Max('id')).get('id__max', 0) or 0
+        last_id = Prediction.objects.aggregate(Max('id')).get('id__max', 0) or 0
         latest_id = last_id + 1
-        return latest_id
+        return '//splitted//{0}'.format(latest_id)
 
 #  class IntelligenceSerializer(serializers.ModelSerializer):
 #     class Meta:

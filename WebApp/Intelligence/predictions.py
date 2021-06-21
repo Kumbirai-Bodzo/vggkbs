@@ -16,9 +16,9 @@ from tensorflow.keras.applications.vgg16 import (decode_predictions,
                                                  preprocess_input)
 from tensorflow.keras.preprocessing import image
 
-from Intelligence.models import Predictions
+from Intelligence.models import Prediction
 from Intelligence.serializers.intelligence_serializer import \
-    PredictionsSerializer
+    PredictionSerializer
 
 
 class VggProcess():
@@ -46,7 +46,7 @@ class VggProcess():
         return image_list
 
     def saveimage(self, details):
-        file_serializer = PredictionsSerializer(data = details)
+        file_serializer = PredictionSerializer(data = details)
         if file_serializer.is_valid():
             file_serializer.save()
         

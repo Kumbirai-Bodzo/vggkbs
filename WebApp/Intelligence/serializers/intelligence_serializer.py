@@ -2,11 +2,11 @@
 import pandas as pd
 from rest_framework import serializers
 
-from Intelligence.models import Predictions
+from Intelligence.models import Prediction
 # from ..models import Intelligence
 
 
-class PredictionsSerializer(serializers.ModelSerializer):
+class PredictionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Predictions
+        model = Prediction
         fields = ['id','n','pred','image']
