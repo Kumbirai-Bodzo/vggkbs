@@ -12,9 +12,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.dispatch import receiver
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from keras.applications.vgg16 import VGG16
 from rest_framework import status
-from tensorflow.keras.preprocessing import image
 
 from Intelligence.models import Prediction
 from Intelligence.serializers.intelligence_serializer import \
@@ -24,6 +22,7 @@ from Intelligence.serializers.intelligence_serializer import \
 class VggProcess():
 
     def iterate_prediction(self,predictionList, splittedImagesUrl):
+        from tensorflow.keras.preprocessing import image
 
         image_list = []
         
@@ -62,6 +61,7 @@ class VggProcess():
 
 
         for filename in glob.glob('{}*jpg'.format(splittedImagesUrl))[:]: #assuming jpg
+            from tensorflow.keras.preprocessing import image
             details = dict()
             img = image.load_img(filename,color_mode='rgb', target_size=(224, 224))
             arr = self.convert_tonumpy(img)
@@ -89,6 +89,8 @@ class VggProcess():
 
    
     def convert_tonumpy(self, image_input):
+        from tensorflow.keras.preprocessing import image
+
         # Converts a PIL Image to 3D Numy Array
         x = image.img_to_array(image_input)
         x.shape
@@ -97,6 +99,7 @@ class VggProcess():
         return x
     
     def predict_images(self, nparr):
+        from keras.applications.vgg16 import VGG16
         from tensorflow.keras.applications.vgg16 import (decode_predictions,
                                                          preprocess_input)
         vgg16_weights = settings.MEDIA_ROOT+ "\\model\\vgg16_weights_tf_dim_ordering_tf_kernels.h5"

@@ -15,14 +15,12 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from tensorflow.keras.preprocessing import image
 
 from Intelligence.models import Prediction, Video
 from Intelligence.predictions import VggProcess
 from Intelligence.serializers.intelligence_serializer import \
     PredictionSerializer
 from Intelligence.serializers.video_serializer import VideoSerializer
-from Intelligence.utils import create_directory
 
 
 # Create your views here.
