@@ -39,36 +39,21 @@ class IntelligenceView(APIView):
         data = request.data
         file_serializer = VideoSerializer(data=data)
 
-        # accommodation
 
         
         if file_serializer.is_valid():
             file_serializer.save()
-            video = Video.objects.last()
             Prediction.objects.all().delete()
-            vprocess = VggProcess()
-            
-            vprocess.split_images_from_video(request, self.splitedImagesUrl,video.file.url)
+
             return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+
         print(file_serializer.errors)
+        return Response({'message':'failed uploading video'}, status =status.HTTP_417_EXPECTATION_FAILED)
 
 
 
-        
-        # create_directory(self.path+ 'videos')
-        # create_directory(self.path+ 'splited')
- 
-        # 
-    
-        # vprocess = VggProcess()
-        # # uploading video
-        # vprocess.uploadVideo(file)
-        
 
-        # # splitting video into images
-        # vprocess.split_images_from_video(self.splitedImagesUrl,self.srcVideoUrl)
-
-        return Response(dict(), status=200)
+        # return Response(dict(), status=200)
 
     def get(self, request):
         # create_directory(self.path+ 'splited')
@@ -117,10 +102,44 @@ class PredictedListView(APIView):
     def get(self, request):
 
         p = Prediction.objects.all()
+        if p.exists():
+            ser = PredictionSerializer(p , many=True)
+            return Response(ser.data, status =status.HTTP_200_OK)
+        return Response({'message':'list empty'}, status =status.HTTP_417_EXPECTATION_FAILED)
+
+
       
-        ser = PredictionSerializer(p , many=True)
+        
+
+        # print(ser.data)
+
+
+      
+        
+
+
+
+class SplitImagesFromVideo(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = [AllowAny]  # IsAuthenticated
+    splitedImagesUrl = settings.MEDIA_ROOT+ "\\splited\\"
+
+ 
+    def get(self, request):
+        video = Video.objects.last()
+
+        vprocess = VggProcess()
+
+        try:
+            vprocess.split_images_from_video(request, self.splitedImagesUrl, video.file.url)
+            return Response({'message':'finished spliting video'}, status =status.HTTP_200_OK)
+        
+        except Exception as e:
+            print(e)
+            return Response({'message':'failed spliting video'}, status =status.HTTP_417_EXPECTATION_FAILED)
+
 
         # print(ser.data)
 
       
-        return Response(ser.data, status =status.HTTP_200_OK)
+        

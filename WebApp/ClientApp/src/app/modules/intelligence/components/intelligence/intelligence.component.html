@@ -1,121 +1,168 @@
-<!-- Search form -->
+<div class="container-fluid">
 
-<div class="d-fle flex-ro row">
+  <div class="row mb-2">
 
-  <div class="col-md-6 col-11 mx-auto">
-  
-    <!-- maxFileSize equal to 1mb -->
-    <p-fileUpload [fileLimit]="1" name="video[]" [style]="{'width':'100%'}" multiple="multiple" customUpload="true"
-      [showUploadButton]="true" (uploadHandler)="uploadVideo($event)" accept="video/*" maxFileSize="1000000"
-      cancelIcon="pi-angle-right">
-      <ng-template pTemplate="content">
-  
-  
-        <!-- <ul *ngIf="uploadedFiles.length">
+    <div class="col-md-6 col-11 mx-auto">
+
+      <!-- maxFileSize equal to 1mb -->
+      <p-fileUpload [fileLimit]="1" name="video[]" [style]="{'width':'100%'}" multiple="multiple" customUpload="true"
+        [showUploadButton]="true" (uploadHandler)="uploadVideo($event)" accept="video/*" maxFileSize="1000000"
+        cancelIcon="pi-angle-right">
+        <ng-template pTemplate="content">
+
+
+          <!-- <ul *ngIf="uploadedFiles.length">
               <h5 *ngFor="let file of uploadedFiles">{{file.name}}</h5>
             
               <li *ngFor="let file of uploadedFiles">{{file.size}} bytes</li>
             </ul> -->
-  
-  
-        <p-progressBar [value]="uplodingValue"></p-progressBar>
-        <span class="text-info h5 h5-responsive" *ngIf="uploading">
-          Video Uploading
-        </span>
-        <span class="text-success h5 h5-responsive" *ngIf="uploaded">
-          Video Uploaded
-          <i class="fas fa-check"></i>
-        </span>
-      </ng-template>
-    </p-fileUpload>
-  
-  </div>
-  <div class="col-md-2 col-11 mx-auto">
-    <ul class="list-group">
-     
-      <li class="list-group-item">
-        <div class="md-v-line"></div><i class="fas fa-bomb mr-2"></i>uploading
-      </li>
-      <li class="list-group-item">
-        <div class="md-v-line"></div><i class="fas fa-bomb mr-2"></i>splitting video
-      </li>
-      <li class="list-group-item">
-        <div class="md-v-line"></div><i class="fas fa-code mr-2"></i>running prediction
-      </li>
-      <li class="list-group-item">
-        <div class="md-v-line"></div><i class="far fa-gem mr-2"></i>geting results
-      </li>
-     
-    </ul>
-  </div>
-</div>
-
-<div class="p-2 container">
-  <!-- Search Bar -->
-  <section class="row">
-    <div class="col-6 m-auto">
-      <input [(ngModel)]="searchValue" class="form-control" type="text" placeholder="Search Image" aria-label="Search">
-
-      <button class="btn btn-mdb-color text-white ml-0" (click)=" startPredictionProcess()">Initialize Prediction
-        Process
-
-      </button>
-
-      <button class="btn btn-primary text-white" (click)="getProcessedImagesList()">Get/Refresh Predicted Data
-
-      </button>
-      <!-- *ngIf="predicting" -->
-      <span *ngIf="predicting">(Processing)
 
 
-        <i class="fas animated swing faster fa-ellipsis-h infinite"></i>
-      </span>
+          <p-progressBar [value]="uplodingValue"></p-progressBar>
+          <span class="text-info h5 h5-responsive" *ngIf="uploading">
+            Video Uploading
+          </span>
+          <span class="text-success h5 h5-responsive" *ngIf="uploaded">
+            Video Uploaded
+            <i class="fas fa-check"></i>
+          </span>
+        </ng-template>
+      </p-fileUpload>
+
     </div>
 
-  </section>
-  <!-- End Search Bar -->
-  <div class="p-2 container">
+    <div class="col-md-auto col-11 mx-auto">
+      <ul class="list-group">
+        <!-- uploading -->
+        <li class="list-group-item">
+          <div class="md-v-line"></div>
+          <span *ngIf="uploading===null">
+            <i class="fas fa-minus mr-2"></i>
+          </span>
+          <span *ngIf="uploading===0" class="text-info"><i class="fas fa-spinner fa-spin mr-2 fa-2x"></i>
+          </span>
+          <span *ngIf="uploading===1" class="text-success"><i class="fas fa-check mr-2"></i>
+          </span>
+          <span *ngIf="uploading===2" class="text-danger"> <i class="fas fa-times text-danger mr-2 "></i>
+          </span>
+          Video Upload
+        </li>
+        <!-- spliting -->
+        <li class="list-group-item">
+          <div class="md-v-line"></div>
+          <!-- <i class="fas fa-bomb mr-2"></i> -->
 
-    <section class="row">
-      <!-- Card -->
+          <span *ngIf="spliting===null">
+            <i class="fas fa-minus mr-2"></i>
+          </span>
+          <span *ngIf="spliting===0" class="text-info">
+            <i class="fas fa-spinner fa-spin mr-2 fa-2x"></i>
+          </span>
+          <span *ngIf="spliting===1" class="text-success"><i class="fas fa-check mr-2"></i>
+          </span>
+          <span *ngIf="spliting===2" class="text-danger"> <i class="fas fa-times text-danger mr-2 "></i>
+          </span>
+          Spliting
+        </li>
+        <!-- prediction -->
+        <li class="list-group-item">
+          <div class="md-v-line"></div>
 
-      <div *ngFor="let image of processedImagesList | ImageListFilter: searchValue"
-        class="card col-lg-4 col-sm-4 p-0 mx-auto my-1">
+          <span *ngIf="predicting===null">
+            <i class="fas fa-minus mr-2"></i>
+          </span>
+          <span *ngIf="predicting===0" class="text-info">
+            <i class="fas fa-spinner fa-spin mr-2 fa-2x"></i>
+          </span>
+          <span *ngIf="predicting===1" class="text-success">
+            <i class="fas fa-check mr-2"></i>
+          </span>
+          <span *ngIf="predicting===2" class="text-danger"><i class="fas fa-times text-danger mr-2 "></i>
+          </span>
+          Prediction
+        </li>
 
-        <!-- Card image -->
-        <div class="view overlay">
-          <img class="card-img-top" style="height: 100%;object-fit: cover;" [src]="image.file_url" alt="Card image cap">
-          <a>
-            <div class="mask rgba-white-slight"></div>
+        <!-- fetching data -->
+        <li class="list-group-item">
+          <div class="md-v-line"></div>
 
-          </a>
-        </div>
+          <span *ngIf="fetchingPredicted===null">
+            <i class="fas fa-minus mr-2 "></i>
+          </span>
 
-        <!-- Card content -->
-        <div class="card-body">
+          <span *ngIf="fetchingPredicted===0" class="text-info ">
+            <i class="fas fa-spinner fa-spin mr-2 fa-2x"></i>
+          </span>
+          <span *ngIf="fetchingPredicted===1" class="text-success">
+            <i class="fas fa-check mr-2"></i>
+          </span>
+          <span *ngIf="fetchingPredicted===2" class="text-danger">
+            <i class="fas fa-times text-danger mr-2 "></i>
+          </span>
+          Getting predicted
+        </li>
 
-          <!-- Title -->
-          <h4 class="card-title p-2 my-0 font-weight-bold">{{image.name}}</h4>
 
-          <h5 class="badg badge-primar p-3 m- h5 h5-responsive">pred: {{image.pred}}</h5>
-          <h5 class="badg badge-primar p-3 m- h5 h5-responsive">n: {{image.n}}</h5>
 
-        </div>
-
-      </div>
-      <!-- Card -->
-
-      <div class="col-auto jumbotron mt-5 mx-auto blue white-text"
-        *ngIf="(processedImagesList | ImageListFilter: searchValue).length ===0 && searchValue">
-        No images found in search list
-
-      </div>
-
-      <app-skeleton-card *ngIf="!processedImagesList && predicting" class="m-auto" [iterations]="3"></app-skeleton-card>
-    </section>
+      </ul>
+    </div>
 
 
   </div>
+  <!-- Search Bar -->
+  <section class="row">
+    <div class="col-9 m-auto justify-content-center align-content-center">
+      <input [(ngModel)]="searchValue" class="form-control" type="text" placeholder="Search Image" aria-label="Search">
+
+    </div>
+    <div class="col-auto m-auto justify-content-center align-content-center">
+<div class="d-flex justify-content-center flex-md-row flex-colum">
+  <div class="p-2 flex-fill"><p-button label="Split Video" iconPos="right" icon="fas fa-expand" (click)="splitImagesFromVideo()"></p-button></div>
+  <div class="p-2 flex-fill"><p-button label="Predict" iconPos="right" icon="fas fa-industry" (click)="startPredictionProcess()"></p-button></div>
+  <div class="p-2 flex-fill"><p-button label="Get/Refresh Predicted" iconPos="right" icon="fas fa-external-link-alt" (click)="getProcessedImagesList()"></p-button></div>
+</div>
+     
+    </div>
+  </section>
+  <!-- End Search Bar -->
+  <section class="row p-3">
+    <!-- Card -->
+<div *ngFor="let image of processedImagesList | ImageListFilter: searchValue"
+      class="col-lg-3 col-sm-4 p-0 m-auto">
+    <div 
+      class="card m-3 hoverable">
+
+      <!-- Card image -->
+      <div class="view overlay">
+        <img class="card-img-top" style="height: 100%;object-fit: cover;" [src]="image.file_url" alt="Card image cap">
+        <a>
+          <div class="mask rgba-white-slight"></div>
+
+        </a>
+      </div>
+
+      <!-- Card content -->
+      <div class="card-body">
+
+        <!-- Title -->
+        <h4 class="card-title p-2 my-0 font-weight-bold">{{image.name}}</h4>
+
+        <h5 class="badg badge-primar p-3 m- h5 h5-responsive">pred: {{image.pred}}</h5>
+        <h5 class="badg badge-primar p-3 m- h5 h5-responsive">n: {{image.n}}</h5>
+
+      </div>
+
+    </div>
+    <!-- Card -->
+</div>
+    <div class="col-auto jumbotron mt-5 mx-auto blue white-text"
+      *ngIf="(processedImagesList | ImageListFilter: searchValue).length ===0 && searchValue">
+      No images found in search list
+
+    </div>
+
+    <app-skeleton-card *ngIf="!processedImagesList" class="m-auto" [iterations]="3"></app-skeleton-card>
+  </section>
 
 
 
