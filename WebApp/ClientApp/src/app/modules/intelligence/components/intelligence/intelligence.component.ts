@@ -18,7 +18,7 @@ export class IntelligenceComponent implements OnInit {
   uploading = false;
   uploaded = false;
   uplodingValue;
-  predicting= false;
+  predicting = false;
   //variables
   processedImagesList: IImage[];
   searchValue: string;
@@ -56,26 +56,47 @@ export class IntelligenceComponent implements OnInit {
       }
     );
   }
-  refresh(){
-  //window.location.reload();
-  this.getProcessedImagesList();
+  refresh() {
+    //window.location.reload();
+    this.getProcessedImagesList();
   }
-  getProcessedImagesList(): any {
-  this.predicting = true;
+
+  startPredictionProcess(): any {
+    this.predicting = true;
     this.processedImagesList = null;
-    this.intelligenceService.getProcessedImages().subscribe(
+    this.intelligenceService.startPredictionProcess().subscribe(
       (response) => {
         console.log('my resoinse');
         console.log(response);
-        this.processedImagesList = response;
-   
+        // this.processedImagesList = response;
+
         this.predicting = false;
-          this.sweetAlert.success('predicted');
+        this.sweetAlert.success('finished prediction');
+
+        this.getProcessedImagesList();
       },
       (error) => {
         console.log(error);
         this.predicting = false;
         this.sweetAlert.error3('prediction failed');
+      }
+    );
+  }
+  getProcessedImagesList(): any {
+    this.predicting = true;
+    this.processedImagesList = null;
+    this.intelligenceService.getProcessedImages().subscribe(
+      (response) => {
+        console.log(response);
+        this.processedImagesList = response;
+
+        //this.predicting = false;
+        this.sweetAlert.success('data successfully refreshed');
+      },
+      (error) => {
+        console.log(error);
+        //this.predicting = false;
+        this.sweetAlert.error3('failed getting processed data');
       }
     );
   }

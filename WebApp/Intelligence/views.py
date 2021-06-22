@@ -88,3 +88,39 @@ class IntelligenceView(APIView):
 
       
         return Response(ser.data, status =status.HTTP_200_OK)
+
+class PredictView(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = [AllowAny]  # IsAuthenticated
+
+    # variables
+    # path = settings.MEDIA_ROOT+ "\\"
+    # srcVideoUrl = settings.MEDIA_ROOT+ "\\uploaded\\uploaded_video.mp4"
+    splitedImagesUrl = settings.MEDIA_ROOT+ "\\splited\\"
+
+ 
+    def get(self, request):
+
+        vprocess = VggProcess()
+        p = Prediction.objects.all()
+        vprocess.iterate_prediction(p,self.splitedImagesUrl,)
+     
+        #ser = PredictionSerializer(p , many=True)
+        #print(ser.data)
+        return Response({'message':'successfully finished prediction'}, status =status.HTTP_200_OK)
+
+class PredictedListView(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = [AllowAny]  # IsAuthenticated
+
+ 
+    def get(self, request):
+
+        p = Prediction.objects.all()
+      
+        ser = PredictionSerializer(p , many=True)
+
+        # print(ser.data)
+
+      
+        return Response(ser.data, status =status.HTTP_200_OK)

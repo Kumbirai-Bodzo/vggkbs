@@ -43,9 +43,14 @@
     <div class="col-6 m-auto">
       <input [(ngModel)]="searchValue" class="form-control" type="text" placeholder="Search Image" aria-label="Search">
 
-      <button class="btn btn-mdb-color text-white ml-0" (click)=" refresh()">Get Predictions
+      <button class="btn btn-mdb-color text-white ml-0" (click)=" startPredictionProcess()">Initialize Prediction
+        Process
 
       </button>
+
+        <button class="btn btn-primary text-white" (click)="getProcessedImagesList()">Get/Refresh Predicted Data
+        
+        </button>
       <!-- *ngIf="predicting" -->
       <span *ngIf="predicting">(Processing)
 
@@ -66,8 +71,7 @@
 
         <!-- Card image -->
         <div class="view overlay">
-          <img class="card-img-top" style="height: 100%;object-fit: cover;" [src]="image.file_url"
-            alt="Card image cap">
+          <img class="card-img-top" style="height: 100%;object-fit: cover;" [src]="image.file_url" alt="Card image cap">
           <a>
             <div class="mask rgba-white-slight"></div>
 

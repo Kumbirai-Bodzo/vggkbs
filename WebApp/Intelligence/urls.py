@@ -10,6 +10,10 @@ from . import views
 
 urlpatterns = [
   path('post', views.IntelligenceView.as_view(), name='intelligence'),
-  path('get', views.IntelligenceView.as_view(), name='intelligence'),
+ # path('get', views.IntelligenceView.as_view(), name='intelligence'),
+
+  path('start-prediction', views.PredictView.as_view(), name='process-prediction'),
+  path('predicted-list', views.PredictedListView.as_view(), name='predicted-list'),
+  
 ]
 

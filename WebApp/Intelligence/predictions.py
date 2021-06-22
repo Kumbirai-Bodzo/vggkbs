@@ -35,7 +35,7 @@ class VggProcess():
             urllib.request.urlretrieve(full_path, "gfg.jpg")
             img = image.load_img('gfg.jpg',color_mode='rgb', target_size=(224, 224))
             arr = self.convert_tonumpy(img)
-            print(arr)
+           #  print(arr)
             values = self.predict_images(arr)
             details = dict(details, **values)
             # details = dict(details, **{'image_url':p})
@@ -54,6 +54,7 @@ class VggProcess():
         
             # image_list.append(details)
             #break
+        return None
 
 
 

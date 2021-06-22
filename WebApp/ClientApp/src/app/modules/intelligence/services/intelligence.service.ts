@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,13 +10,18 @@ import { IImage } from '../interfaces/IImage';
 export class IntelligenceService {
   private baseurl = environment.apiUrl + 'intelligence/';
 
-  private getProcessedImagesUrl = this.baseurl + 'get';
+  private getProcessedImagesUrl = this.baseurl + 'predicted-list';
+  private startPredictionProcessUrl = this.baseurl + 'start-prediction';
   private uploadVideoUrl = this.baseurl + 'post';
- 
+
   constructor(private http: HttpClient) {}
 
   public getProcessedImages(): Observable<IImage[]> {
     return this.http.get<IImage[]>(this.getProcessedImagesUrl);
+  }
+
+  public startPredictionProcess(): Observable<any> {
+    return this.http.get<any>(this.startPredictionProcessUrl);
   }
 
   public uploadVideo(model): Observable<any> {
@@ -24,7 +29,7 @@ export class IntelligenceService {
       // headers: this.generalService.getHttpHeaders(),
     });
   }
-  
+
   // public acceptBookingStatus(id): Observable<any> {
   //   const httpParams = new HttpParams().set('id', id);
   //   // + '?id=' + id
