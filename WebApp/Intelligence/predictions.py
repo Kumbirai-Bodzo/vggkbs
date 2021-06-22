@@ -32,8 +32,8 @@ class VggProcess():
         for p in predictionList:
             details = dict()
             full_path = '{}.jpg'.format(p.file.url)
-            urllib.request.urlretrieve(full_path, "gfg.jpg")
-            img = image.load_img('gfg.jpg',color_mode='rgb', target_size=(224, 224))
+            urllib.request.urlretrieve(full_path, "pred.jpg")
+            img = image.load_img('pred.jpg',color_mode='rgb', target_size=(224, 224))
             arr = self.convert_tonumpy(img)
            #  print(arr)
             values = self.predict_images(arr)
