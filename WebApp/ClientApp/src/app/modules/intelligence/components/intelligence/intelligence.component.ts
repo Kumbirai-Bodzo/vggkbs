@@ -4,6 +4,7 @@ import { Galleria } from 'primeng/galleria';
 import { SweetAlertService } from 'src/app/application-shared/services/sweetAlert/sweetAlert.service';
 import { IImage } from '../../interfaces/IImage';
 import { IntelligenceService } from '../../services/intelligence.service';
+import { interval, Subscription } from 'rxjs';
 //import { Galleria } from 'primeng/galleria';
 @Component({
   selector: 'app-intelligence',
@@ -22,6 +23,7 @@ export class IntelligenceComponent implements OnInit {
   //variables
   processedImagesList: IImage[];
   searchValue: string;
+  subscription: Subscription;
   constructor(
     private intelligenceService: IntelligenceService,
     private sweetAlert: SweetAlertService
@@ -29,6 +31,19 @@ export class IntelligenceComponent implements OnInit {
 
   ngOnInit() {
     //this.getProcessedImagesList();
+    // setInterval(function () {
+    //   console.log('fetching data...!');
+    //   this.getProcessedImagesList();
+    // }, 5000); //run this thang every 2 seconds
+
+    const source = interval(20000);
+    this.subscription = source.subscribe((val) => {
+     this.getProcessedImagesList();
+      console.log('fetching data...!');
+    });
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
   uploadVideo(event): any {
     this.uploading = true;
@@ -83,7 +98,7 @@ export class IntelligenceComponent implements OnInit {
     );
   }
   getProcessedImagesList(): any {
-    this.predicting = true;
+   // this.predicting = true;
     this.processedImagesList = null;
     this.intelligenceService.getProcessedImages().subscribe(
       (response) => {

@@ -11,10 +11,28 @@ INSTALLED_APPS += PROD_APPS
 try:
     # pyright: reportMissingImports=false
     import dj_database_url
+    # FILE_STORAGE = FileSystemStorage(location=settings.MEDIA_ROOT)
+    # DEFAULT_FILE_STORAGE = FileSystemStorage(location=settings.MEDIA_ROOT)
+    
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': 'elitecode',
+        'API_KEY': '488823284154167',
+        'API_SECRET': 'SGVVIikZyAXkFO5jZXHYyvdOryI',
+        }
 
 
-    FILE_STORAGE = FileSystemStorage(location=settings.MEDIA_ROOT)
-    DEFAULT_FILE_STORAGE = FileSystemStorage(location=settings.MEDIA_ROOT)
+    import cloudinary
+    import cloudinary.api
+    import cloudinary.uploader
+
+    cloudinary.config( 
+    cloud_name ='elitecode',
+    api_key = '488823284154167',
+    api_secret = 'SGVVIikZyAXkFO5jZXHYyvdOryI',
+
+    )
 
     # define postgrel database connections
 
@@ -42,3 +60,4 @@ CUSTOM_FRONTEND_SITE_URL = CUSTOM_DOMAIN_NAME
 CUSTOM_PASSWORD_RESET_PAGE_URL = CUSTOM_FRONTEND_SITE_URL + '/auth/account/password-confirm-reset/confirm'
 CUSTOM_ACCOUNT_CONFIRM_EMAIL_URL = CUSTOM_FRONTEND_SITE_URL + "/auth/account-confirm-email/?key={0}"
 DEBUG = False
+
