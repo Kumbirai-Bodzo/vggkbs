@@ -113,11 +113,14 @@ class VggProcess():
             model = VGG16(weights = vgg16_weights)
 
         except Exception as e:
-            print(e)
-            model = VGG16(weights='https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels.h5')
+            print('cannot locate file')
+            # model = VGG16(weights='https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels.h5')
             
 
         print(model)
+        if not model:
+            model = VGG16(weights='imagenet')
+
         x = preprocess_input(nparr)
         features = model.predict(x)
         p = decode_predictions(features)
