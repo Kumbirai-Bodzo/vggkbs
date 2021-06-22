@@ -101,7 +101,7 @@ class PredictedListView(APIView):
  
     def get(self, request):
 
-        p = Prediction.objects.exclude(pred__isnull=True)
+        p = Prediction.objects.exclude(n__isnull=True).exclude(pred__exact='')
   
         if p.exists():
             ser = PredictionSerializer(p , many=True)
