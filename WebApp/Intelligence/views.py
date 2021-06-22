@@ -88,11 +88,16 @@ class PredictView(APIView):
 
         vprocess = VggProcess()
         p = Prediction.objects.all()
-        vprocess.iterate_prediction(p,self.splitedImagesUrl,)
+        try:
+            vprocess.iterate_prediction(p,self.splitedImagesUrl,)
+            return Response({'message':'successfully finished prediction'}, status =status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response({'message':'failed predicting'}, status =status.HTTP_417_EXPECTATION_FAILED)
      
         #ser = PredictionSerializer(p , many=True)
         #print(ser.data)
-        return Response({'message':'successfully finished prediction'}, status =status.HTTP_200_OK)
+        
 
 class PredictedListView(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
