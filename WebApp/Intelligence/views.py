@@ -101,7 +101,8 @@ class PredictedListView(APIView):
  
     def get(self, request):
 
-        p = Prediction.objects.all()
+        p = Prediction.objects.exclude(pred__isnull=True)
+  
         if p.exists():
             ser = PredictionSerializer(p , many=True)
             return Response(ser.data, status =status.HTTP_200_OK)

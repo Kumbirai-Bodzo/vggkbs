@@ -133,7 +133,6 @@ export class IntelligenceComponent implements OnInit {
         console.log(response);
         this.processedImagesList = response;
 
-        //this.predicting = false;
         this.sweetAlert.success('data successfully refreshed');
       },
       (error) => {
