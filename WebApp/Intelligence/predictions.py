@@ -117,9 +117,11 @@ class VggProcess():
             # model = VGG16(weights='https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels.h5')
             
 
-        print(model)
+        
         if not model:
             model = VGG16(weights='imagenet')
+        
+        print(model)
 
         x = preprocess_input(nparr)
         features = model.predict(x)
