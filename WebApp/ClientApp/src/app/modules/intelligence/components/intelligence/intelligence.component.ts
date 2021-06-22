@@ -140,7 +140,7 @@ export class IntelligenceComponent implements OnInit {
         this.fetchingPredicted = 2;
         console.log(error);
         //this.predicting = false;
-        this.sweetAlert.error3('Oops seems like nothing has been predicted yet');
+        this.sweetAlert.error('Oops seems like nothing has been predicted yet, upload video');
       }
     );
   }
