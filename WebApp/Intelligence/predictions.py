@@ -1,5 +1,6 @@
 import glob
 import os
+import urllib.request
 
 import cv2
 import numpy as np
@@ -13,8 +14,6 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from keras.applications.vgg16 import VGG16
 from rest_framework import status
-from tensorflow.keras.applications.vgg16 import (decode_predictions,
-                                                 preprocess_input)
 from tensorflow.keras.preprocessing import image
 
 from Intelligence.models import Prediction
@@ -24,9 +23,44 @@ from Intelligence.serializers.intelligence_serializer import \
 
 class VggProcess():
 
-    def iterate_prediction(self, splittedImagesUrl):
+    def iterate_prediction(self,predictionList, splittedImagesUrl):
 
         image_list = []
+        
+
+        # 
+
+        for p in predictionList:
+            details = dict()
+            full_path = '{}.jpg'.format(p.file.url)
+            urllib.request.urlretrieve(full_path, "gfg.jpg")
+            img = image.load_img('gfg.jpg',color_mode='rgb', target_size=(224, 224))
+            arr = self.convert_tonumpy(img)
+            print(arr)
+            values = self.predict_images(arr)
+            details = dict(details, **values)
+            # details = dict(details, **{'image_url':p})
+
+            instance = Prediction.objects.get(id = p.id)
+            
+            update_serializer = PredictionSerializer(instance, data=details, many=False)
+
+
+            if update_serializer.is_valid():
+                update_serializer.save()
+                print('_______________')
+                print('saved model')
+            print('_______________')
+            print(update_serializer.errors)
+        
+            # image_list.append(details)
+            #break
+
+
+
+        #return image_list
+
+
         for filename in glob.glob('{}*jpg'.format(splittedImagesUrl))[:]: #assuming jpg
             details = dict()
             img = image.load_img(filename,color_mode='rgb', target_size=(224, 224))
@@ -63,6 +97,8 @@ class VggProcess():
         return x
     
     def predict_images(self, nparr):
+        from tensorflow.keras.applications.vgg16 import (decode_predictions,
+                                                         preprocess_input)
         vgg16_weights = settings.MEDIA_ROOT+ "\\model\\vgg16_weights_tf_dim_ordering_tf_kernels.h5"
         #vgg16_weights = 'models/vgg16_weights_tf_dim_ordering_tf_kernels.h5'
 
@@ -81,9 +117,9 @@ class VggProcess():
         features = model.predict(x)
         p = decode_predictions(features)
         dict = {
-        'n':p[0][0][0],
-        'name':p[0][0][1],
-        'pred':p[0][0][2]}
+        'n':str(p[0][0][0]),
+        'name':str(p[0][0][1]),
+        'pred':str(p[0][0][2])}
         print(dict)
 
         return dict
@@ -134,7 +170,7 @@ class VggProcess():
 
                 print(name)
                 currentframe += 1
-                # break
+                #break
             
 
                 # data = {

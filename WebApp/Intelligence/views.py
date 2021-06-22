@@ -19,6 +19,8 @@ from tensorflow.keras.preprocessing import image
 
 from Intelligence.models import Prediction, Video
 from Intelligence.predictions import VggProcess
+from Intelligence.serializers.intelligence_serializer import \
+    PredictionSerializer
 from Intelligence.serializers.video_serializer import VideoSerializer
 from Intelligence.utils import create_directory
 
@@ -71,14 +73,20 @@ class IntelligenceView(APIView):
         return Response(dict(), status=200)
 
     def get(self, request):
-        create_directory(self.path+ 'splited')
+        # create_directory(self.path+ 'splited')
+        #Prediction.objects.all().delete()
 
         vprocess = VggProcess()
-        #ret = vprocess.iterate_prediction(self.splitedImagesUrl,)
-        ret = {}
-        video = Video.objects.last()
-        print(video.file.url)
-        vprocess.split_images_from_video(request, self.splitedImagesUrl,video.file.url)
+        p = Prediction.objects.all()
+        ret = vprocess.iterate_prediction(p,self.splitedImagesUrl,)
+     
+        #video = Video.objects.last()
+        #print(video.file.url)
+        #vprocess.split_images_from_video(request, self.splitedImagesUrl,video.file.url)
+
+        ser = PredictionSerializer(p , many=True)
+
+        print(ser.data)
 
       
-        return Response(ret, status =status.HTTP_200_OK)
+        return Response(ser.data, status =status.HTTP_200_OK)

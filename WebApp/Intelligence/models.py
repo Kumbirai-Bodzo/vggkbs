@@ -42,12 +42,17 @@ class Prediction(models.Model):
     #                             storage= FileSystemStorage(location=settings.MEDIA_ROOT)
     #                             )
     file = models.FileField(upload_to='images/',blank=True)
-    image =  CloudinaryField(folder = "splitted/",public_id = "1",overwrite = True, resource_type = "image")
+    # image =  CloudinaryField(folder = "splitted/",public_id = "1",overwrite = True, resource_type = "image")
 
     def image_url(self):
         if not self.image.url:
             return None
         return '{0}//{1}'.format(settings.CUSTOM_IMAGES_HOST_URL, self.image.url)
+
+    def file_url(self):
+        if not self.file:
+            return None
+        return self.file.url
 
     def upload_file_url(self):
         last_id = Prediction.objects.aggregate(Max('id')).get('id__max', 0) or 0

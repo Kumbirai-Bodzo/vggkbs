@@ -9,4 +9,4 @@ from Intelligence.models import Prediction
 class PredictionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Prediction
-        fields = ['id','n','pred','image']
+        fields = ['id','name','n','pred','file_url']
