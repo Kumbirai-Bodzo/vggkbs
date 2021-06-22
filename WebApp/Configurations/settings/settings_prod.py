@@ -1,5 +1,6 @@
 
 from django.core.files.storage import FileSystemStorage
+
 from .base_settings import *
 
 PROD_APPS =[
@@ -11,6 +12,7 @@ INSTALLED_APPS += PROD_APPS
 try:
     # pyright: reportMissingImports=false
     import dj_database_url
+
     # FILE_STORAGE = FileSystemStorage(location=settings.MEDIA_ROOT)
     # DEFAULT_FILE_STORAGE = FileSystemStorage(location=settings.MEDIA_ROOT)
     
@@ -59,5 +61,5 @@ CUSTOM_FRONTEND_SITE_URL = CUSTOM_DOMAIN_NAME
 # Links
 CUSTOM_PASSWORD_RESET_PAGE_URL = CUSTOM_FRONTEND_SITE_URL + '/auth/account/password-confirm-reset/confirm'
 CUSTOM_ACCOUNT_CONFIRM_EMAIL_URL = CUSTOM_FRONTEND_SITE_URL + "/auth/account-confirm-email/?key={0}"
-DEBUG = False
+DEBUG = True
 
