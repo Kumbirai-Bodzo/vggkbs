@@ -105,7 +105,6 @@ export class IntelligenceComponent implements OnInit {
       (error) => {
         this.predicting = 2;
         console.log(error);
-        this.predicting = false;
         this.sweetAlert.error3('prediction failed');
       }
     );
@@ -118,10 +117,6 @@ export class IntelligenceComponent implements OnInit {
       (response) => {
         this.fetchingPredicted = 1;
        
-        // if (this.processedImagesList !== response) {
-        //   this.processedImagesList = response;
-        //    console.log(response);
-        // }
        this.processedImagesList = response;
       
       },

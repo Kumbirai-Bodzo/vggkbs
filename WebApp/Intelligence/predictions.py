@@ -6,10 +6,9 @@ import numpy as np
 from django.conf import settings
 from django.core.files.base import ContentFile
 
-
 from Intelligence.models import Prediction
-from Intelligence.serializers.prediction_serializer import PredictionCreateSerializer
-
+from Intelligence.serializers.prediction_serializer import \
+    PredictionCreateSerializer
 
 
 class VggProcess():

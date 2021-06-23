@@ -7,8 +7,8 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from Intelligence.models import Prediction, Video
 from Intelligence.predictions import VggProcess
-from Intelligence.serializers.prediction_serializer import PredictionDetailsSerializer
-
+from Intelligence.serializers.prediction_serializer import \
+    PredictionDetailsSerializer
 from Intelligence.serializers.video_serializer import VideoSerializer
 
 
