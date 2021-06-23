@@ -1,94 +1,53 @@
-import glob
-import os
+
 import urllib.request
 
 import cv2
 import numpy as np
-import pandas as pd
 from django.conf import settings
-from django.core.files.base import ContentFile, File
-from django.core.files.storage import FileSystemStorage, default_storage
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.dispatch import receiver
-from django.shortcuts import render
-from django.template.loader import render_to_string
-from rest_framework import status
+from django.core.files.base import ContentFile
+
 
 from Intelligence.models import Prediction
-from Intelligence.serializers.intelligence_serializer import \
-    PredictionSerializer
+from Intelligence.serializers.prediction_serializer import PredictionCreateSerializer
+
 
 
 class VggProcess():
 
-    def iterate_prediction(self,predictionList, splittedImagesUrl):
+    def iterate_prediction(self,predictionList, ):
         from tensorflow.keras.preprocessing import image
-
-        image_list = []
-        
-
-        # 
 
         for p in predictionList:
             details = dict()
+            # get image from cloudinary
             full_path = '{}.jpg'.format(p.file.url)
             urllib.request.urlretrieve(full_path, "pred.jpg")
+
+            # load image
             img = image.load_img('pred.jpg',color_mode='rgb', target_size=(224, 224))
             arr = self.convert_tonumpy(img)
-           #  print(arr)
+
+            # run model prediction
             values = self.predict_images(arr)
             details = dict(details, **values)
-            # details = dict(details, **{'image_url':p})
 
+            # update prediction values in the database
             instance = Prediction.objects.get(id = p.id)
             
-            update_serializer = PredictionSerializer(instance, data=details, many=False)
+            update_serializer = PredictionCreateSerializer(instance, data=details, many=False)
 
 
             if update_serializer.is_valid():
                 update_serializer.save()
                 print('_______________')
-                print('saved model')
+                print('saved prediction')
             print('_______________')
             print(update_serializer.errors)
-        
-            # image_list.append(details)
-            #break
+  
         return None
 
 
 
-        #return image_list
-
-
-        for filename in glob.glob('{}*jpg'.format(splittedImagesUrl))[:]: #assuming jpg
-            from tensorflow.keras.preprocessing import image
-            details = dict()
-            img = image.load_img(filename,color_mode='rgb', target_size=(224, 224))
-            arr = self.convert_tonumpy(img)
-            values = self.predict_images(arr)
-            # values2= {'n':'n1233',
-            # 'name':'cat',
-            #     'pred':'98',}
-            
-            host_path = '{}/static/splited/{}'.format(settings.CUSTOM_IMAGES_HOST_URL, os.path.basename(filename)) 
-
-            details = dict(details, **values)
-
-            details = dict(details, **{'image_url':host_path})
-    
-            image_list.append(details)
-            
-        return image_list
-
-    def saveimage(self, details):
-        file_serializer = PredictionSerializer(data = details)
-        if file_serializer.is_valid():
-            file_serializer.save()
-        
-        print(file_serializer.errors)
-
-   
     def convert_tonumpy(self, image_input):
         from tensorflow.keras.preprocessing import image
 
@@ -104,7 +63,6 @@ class VggProcess():
         from tensorflow.keras.applications.vgg16 import (decode_predictions,
                                                          preprocess_input)
         vgg16_weights = settings.MEDIA_ROOT+ "\\model\\vgg16_weights_tf_dim_ordering_tf_kernels.h5"
-        #vgg16_weights = 'models/vgg16_weights_tf_dim_ordering_tf_kernels.h5'
 
         # model = VGG16(weights='imagenet')
         model = None
@@ -114,8 +72,6 @@ class VggProcess():
 
         except Exception as e:
             print('cannot locate file')
-            # model = VGG16(weights='https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels.h5')
-            
 
         
         if not model:
@@ -134,7 +90,7 @@ class VggProcess():
 
         return dict
 
-    def split_images_from_video(self,request, splitedImagesUrl, srcVideoUrl):
+    def split_images_from_video(self, srcVideoUrl):
         print('_______________________')
         vidcap = cv2.VideoCapture(srcVideoUrl)
         print(vidcap)
@@ -142,77 +98,21 @@ class VggProcess():
         print('reading images from video')
         currentframe = 0
         while(True):
-            #print('read..')
-            
+       
             # reading from frame
             ret,frame = vidcap.read()
         
-            if ret:
-                # if video is still left continue creating images
-                name = splitedImagesUrl + str(currentframe) + '.jpg'
-                #print ('Creating...' + name)
-                
-
-                # mg = image.load_img(frame,color_mode='rgb', target_size=(224, 224))
-                #ret,jpeg = cv2.imencode('.jpg', frame)
-                #print(jpeg.tobytes())
-                # import io
-                # 
-                # image = Image.open(io.BytesIO(jpeg.tobytes()))
-                # import PIL.Image as Image
-                # from django.core.files.uploadedfile import InMemoryUploadedFile
-
-                # img_pill = Image.fromarray(frame, 'RGB')
-          
-                # img = InMemoryUploadedFile(img_pill, None, 'foo.jpg', 'image/jpeg', img_pill.tell, None)
-                # request.FILES['image'] = img
-                from cloudinary import CloudinaryImage
-
-                # c = CloudinaryImage(img)
-                #print(c)
-                #cv2.imwrite(name, frame)
+            if ret:    
+              
                 ret, buf = cv2.imencode('.jpg', frame) # cropped_image: cv2 / np array
+                # convert bytes to image object
                 content = ContentFile(buf.tobytes())
+                # save file to database
                 p =  Prediction()
                 p.file.save('{}.jpg'.format(currentframe), content)
-                print(content)
-
-
-                print(name)
+          
                 currentframe += 1
-                #break
-            
-
-                # data = {
-                #     'image': content , #CloudinaryImage(name).image(secure=True),
-                #      'name': 'name',
-                # 'pred': '0',
-                # 'n':'0'
-                # }
-                 
-
-                # file_serializer = PredictionSerializer(data =data)
-                # if file_serializer.is_valid():
-                #     file_serializer.save()
-                #     break
-
-                #     if os.path.exists(name):
-                #         #os.remove(name)
-                #         #break
-                #         pass
-                    
-
-                    #return Response(file_serializer.data, status=status.HTTP_201_CREATED)
-                # print(file_serializer.errors)
-            
-        
-                # writing the extracted images
-                # 
-        
-                # print(r)
-        
-                # increasing counter so that it will
-                # show how many frames are created
+                print(str(currentframe) + '.jpg')
                 
             else:
                 print('nothing to read now.')
@@ -222,19 +122,3 @@ class VggProcess():
         cv2.destroyAllWindows()
         print('finished reading images from video')
         print('_______________________')
-
-    def uploadVideo(self, file):
-        def delete_existing():
-                full_path = os.path.join(settings.MEDIA_ROOT, 'uploaded/uploaded_video.mp4')
-                 
-                if os.path.exists(full_path):
-                    os.remove(full_path)
-                    return full_path
-        delete_existing()
-        fs = FileSystemStorage()
-        fs.save('uploaded/uploaded_video.mp4', file)
-        # uploaded_file_url = fs.url(filename)
-        # print(uploaded_file_url)
-        return 'video saved'
-
-

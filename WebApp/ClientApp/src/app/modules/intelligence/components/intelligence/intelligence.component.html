@@ -11,11 +11,7 @@
         <ng-template pTemplate="content">
 
 
-          <!-- <ul *ngIf="uploadedFiles.length">
-              <h5 *ngFor="let file of uploadedFiles">{{file.name}}</h5>
-            
-              <li *ngFor="let file of uploadedFiles">{{file.size}} bytes</li>
-            </ul> -->
+         
 
 
           <p-progressBar [value]="uplodingValue"></p-progressBar>
@@ -41,9 +37,9 @@
           </span>
           <span *ngIf="uploading===0" class="text-info"><i class="fas fa-spinner fa-spin mr-2 fa-2x"></i>
           </span>
-          <span *ngIf="uploading===1" class="text-success"><i class="fas fa-check mr-2"></i>
+          <span *ngIf="uploading===1" class="text-success"><i class="fas fa-check mr-2 fa-2x"></i>
           </span>
-          <span *ngIf="uploading===2" class="text-danger"> <i class="fas fa-times text-danger mr-2 "></i>
+          <span *ngIf="uploading===2" class="text-danger"> <i class="fas fa-times text-danger mr-2 fa-2x"></i>
           </span>
           Video Upload
         </li>
@@ -58,9 +54,9 @@
           <span *ngIf="spliting===0" class="text-info">
             <i class="fas fa-spinner fa-spin mr-2 fa-2x"></i>
           </span>
-          <span *ngIf="spliting===1" class="text-success"><i class="fas fa-check mr-2"></i>
+          <span *ngIf="spliting===1" class="text-success"><i class="fas fa-check mr-2 fa-2x"></i>
           </span>
-          <span *ngIf="spliting===2" class="text-danger"> <i class="fas fa-times text-danger mr-2 "></i>
+          <span *ngIf="spliting===2" class="text-danger"> <i class="fas fa-times text-danger mr-2 fa-2x"></i>
           </span>
           Spliting
         </li>
@@ -75,9 +71,9 @@
             <i class="fas fa-spinner fa-spin mr-2 fa-2x"></i>
           </span>
           <span *ngIf="predicting===1" class="text-success">
-            <i class="fas fa-check mr-2"></i>
+            <i class="fas fa-check mr-2 fa-2x"></i>
           </span>
-          <span *ngIf="predicting===2" class="text-danger"><i class="fas fa-times text-danger mr-2 "></i>
+          <span *ngIf="predicting===2" class="text-danger"><i class="fas fa-times text-danger mr-2 fa-2x"></i>
           </span>
           Prediction
         </li>
@@ -94,10 +90,10 @@
             <i class="fas fa-spinner fa-spin mr-2 fa-2x"></i>
           </span>
           <span *ngIf="fetchingPredicted===1" class="text-success">
-            <i class="fas fa-check mr-2"></i>
+            <i class="fas fa-check mr-2 fa-2x"></i>
           </span>
           <span *ngIf="fetchingPredicted===2" class="text-danger">
-            <i class="fas fa-times text-danger mr-2 "></i>
+            <i class="fas fa-times text-danger mr-2 fa-2x"></i>
           </span>
           Getting predicted
         </li>

@@ -9,7 +9,7 @@ from django.views.generic import RedirectView, TemplateView
 from . import views
 
 urlpatterns = [
-  path('post', views.IntelligenceView.as_view(), name='intelligence'),
+  path('post', views.UploadVideoView.as_view(), name='intelligence'),
  # path('get', views.IntelligenceView.as_view(), name='intelligence'),
 
   path('split-images', views.SplitImagesFromVideo.as_view(), name='split-images'),

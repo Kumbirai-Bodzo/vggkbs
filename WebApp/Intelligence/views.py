@@ -1,46 +1,28 @@
-import os
-
-import cv2
-import pandas as pd
-from django.conf import settings
-from django.core.files.base import ContentFile, File
-from django.core.files.storage import FileSystemStorage, default_storage
-from django.dispatch import receiver
-from django.shortcuts import render
-from django.template.loader import render_to_string
 from rest_framework import status
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.parsers import FileUploadParser, JSONParser
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.parsers import FileUploadParser
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from Intelligence.models import Prediction, Video
 from Intelligence.predictions import VggProcess
-from Intelligence.serializers.intelligence_serializer import \
-    PredictionSerializer
+from Intelligence.serializers.prediction_serializer import PredictionDetailsSerializer
+
 from Intelligence.serializers.video_serializer import VideoSerializer
 
 
-# Create your views here.
-class IntelligenceView(APIView):
+# Upload video view.
+class UploadVideoView(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = [AllowAny]  # IsAuthenticated
+    permission_classes = [AllowAny]
     parser_class = (FileUploadParser,)
 
     # variables
-    path = settings.MEDIA_ROOT+ "\\"
-    srcVideoUrl = settings.MEDIA_ROOT+ "\\uploaded\\uploaded_video.mp4"
-    splitedImagesUrl = settings.MEDIA_ROOT+ "\\splited\\"
-
     def post(self, request):
-        # file  = request.FILES['video']
         data = request.data
         file_serializer = VideoSerializer(data=data)
 
-
-        
         if file_serializer.is_valid():
             file_serializer.save()
             Prediction.objects.all().delete()
@@ -51,57 +33,27 @@ class IntelligenceView(APIView):
         return Response({'message':'failed uploading video'}, status =status.HTTP_417_EXPECTATION_FAILED)
 
 
-
-
-        # return Response(dict(), status=200)
-
-    def get(self, request):
-        # create_directory(self.path+ 'splited')
-        #Prediction.objects.all().delete()
-
-        vprocess = VggProcess()
-        p = Prediction.objects.all()
-        ret = vprocess.iterate_prediction(p,self.splitedImagesUrl,)
-     
-        #video = Video.objects.last()
-        #print(video.file.url)
-        #vprocess.split_images_from_video(request, self.splitedImagesUrl,video.file.url)
-
-        ser = PredictionSerializer(p , many=True)
-
-        print(ser.data)
-
-      
-        return Response(ser.data, status =status.HTTP_200_OK)
-
 class PredictView(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = [AllowAny]  # IsAuthenticated
+    permission_classes = [AllowAny] 
 
     # variables
-    # path = settings.MEDIA_ROOT+ "\\"
-    # srcVideoUrl = settings.MEDIA_ROOT+ "\\uploaded\\uploaded_video.mp4"
-    splitedImagesUrl = settings.MEDIA_ROOT+ "\\splited\\"
-
  
     def get(self, request):
 
         vprocess = VggProcess()
         p = Prediction.objects.all()
         try:
-            vprocess.iterate_prediction(p,self.splitedImagesUrl,)
+            vprocess.iterate_prediction(p)
             return Response({'message':'successfully finished prediction'}, status =status.HTTP_200_OK)
         except Exception as e:
             print(e)
             return Response({'message':'failed predicting'}, status =status.HTTP_417_EXPECTATION_FAILED)
-     
-        #ser = PredictionSerializer(p , many=True)
-        #print(ser.data)
         
-
+# Get predicted list view.
 class PredictedListView(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = [AllowAny]  # IsAuthenticated
+    permission_classes = [AllowAny]
 
  
     def get(self, request):
@@ -109,43 +61,30 @@ class PredictedListView(APIView):
         p = Prediction.objects.exclude(n__isnull=True).exclude(pred__exact='')
   
         if p.exists():
-            ser = PredictionSerializer(p , many=True)
+            ser = PredictionDetailsSerializer(p , many=True)
             return Response(ser.data, status =status.HTTP_200_OK)
         return Response({'message':'list empty'}, status =status.HTTP_417_EXPECTATION_FAILED)
-
-
-      
-        
-
-        # print(ser.data)
-
-
-      
-        
+       
 
 
 
 class SplitImagesFromVideo(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = [AllowAny]  # IsAuthenticated
-    splitedImagesUrl = settings.MEDIA_ROOT+ "\\splited\\"
-
- 
+    permission_classes = [AllowAny] 
+  
     def get(self, request):
         video = Video.objects.last()
 
         vprocess = VggProcess()
 
         try:
-            vprocess.split_images_from_video(request, self.splitedImagesUrl, video.file.url)
+            Prediction.objects.all().delete()
+            vprocess.split_images_from_video(video.file.url)
             return Response({'message':'finished spliting video'}, status =status.HTTP_200_OK)
         
         except Exception as e:
             print(e)
             return Response({'message':'failed spliting video'}, status =status.HTTP_417_EXPECTATION_FAILED)
-
-
-        # print(ser.data)
 
       
         

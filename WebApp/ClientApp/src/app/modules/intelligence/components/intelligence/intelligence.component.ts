@@ -34,15 +34,9 @@ export class IntelligenceComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    //this.getProcessedImagesList();
-    // setInterval(function () {
-    //   console.log('fetching data...!');
-    //   this.getProcessedImagesList();
-    // }, 5000); //run this thang every 2 seconds
-
-    const source = interval(20000);
+    const source = interval(10000);
     this.subscription = source.subscribe((val) => {
-      this.getProcessedImagesList();
+      this.autoRefreshProcessedImagesList();
       console.log('fetching data...!');
     });
   }
@@ -55,14 +49,13 @@ export class IntelligenceComponent implements OnInit {
     const formData: any = new FormData();
 
     formData.append('file', event.files[0], event.files[0].name);
-    
 
     this.intelligenceService.uploadVideo(formData).subscribe(
       (response) => {
         console.log(response);
         this.sweetAlert.success2('Uploaded video');
         this.uploading = 1;
-        //this.uploaded = true;
+      
         this.uplodingValue = 100;
 
         this.splitImagesFromVideo();
@@ -70,31 +63,27 @@ export class IntelligenceComponent implements OnInit {
       (error) => {
         console.log(error);
         this.sweetAlert.error3('Failed uploading video');
-        // this.uploading = null;
+      
         this.uploading = 2;
       }
     );
   }
-  refresh() {
-    //window.location.reload();
-    this.getProcessedImagesList();
-  }
+
   splitImagesFromVideo(): any {
-    // this.predicting = true;
-    //  this.processedImagesList = null;
+  
     this.spliting = 0;
     this.intelligenceService.splitImagesFromVideo().subscribe(
       (response) => {
         console.log(response);
-        //this.processedImagesList = response;
+      
         this.spliting = 1;
-        //this.predicting = false;
+         this.processedImagesList = null;
         this.sweetAlert.success('data successfully refreshed');
         this.startPredictionProcess();
       },
       (error) => {
         console.log(error);
-        //this.predicting = false;
+     
         this.sweetAlert.error3('failed spliting images');
         this.spliting = 2;
       }
@@ -102,15 +91,13 @@ export class IntelligenceComponent implements OnInit {
   }
   startPredictionProcess(): any {
     this.predicting = 0;
-    // this.processedImagesList = null;
+
     this.intelligenceService.startPredictionProcess().subscribe(
       (response) => {
         this.predicting = 1;
-        // console.log('my resoinse');
-        console.log(response);
-        // this.processedImagesList = response;
 
-        // this.predicting = false;
+        console.log(response);
+     
         this.sweetAlert.success('finished prediction');
 
         this.getProcessedImagesList();
@@ -123,9 +110,31 @@ export class IntelligenceComponent implements OnInit {
       }
     );
   }
+
+  autoRefreshProcessedImagesList(): any {
+    this.fetchingPredicted = 0;
+    
+    this.intelligenceService.getProcessedImages().subscribe(
+      (response) => {
+        this.fetchingPredicted = 1;
+       
+        // if (this.processedImagesList !== response) {
+        //   this.processedImagesList = response;
+        //    console.log(response);
+        // }
+       this.processedImagesList = response;
+      
+      },
+      (error) => {
+        this.fetchingPredicted = 2;
+        console.log(error);
+     
+      }
+    );
+  }
   getProcessedImagesList(): any {
     this.fetchingPredicted = 0;
-    // this.predicting = true;
+  
     this.processedImagesList = null;
     this.intelligenceService.getProcessedImages().subscribe(
       (response) => {
@@ -138,8 +147,10 @@ export class IntelligenceComponent implements OnInit {
       (error) => {
         this.fetchingPredicted = 2;
         console.log(error);
-        //this.predicting = false;
-        this.sweetAlert.error('Oops seems like nothing has been predicted yet, upload video');
+      
+        this.sweetAlert.error(
+          'Oops seems like nothing has been predicted yet, upload video'
+        );
       }
     );
   }
