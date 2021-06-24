@@ -11,17 +11,15 @@
         <ng-template pTemplate="content">
 
 
-         
+
 
 
           <p-progressBar [value]="uplodingValue"></p-progressBar>
-          <span class="text-info h5 h5-responsive" *ngIf="uploading">
-            Video Uploading
+          <span class="text-info h5 h5-responsive">
+            Video Upload
+            <i class="fas fa-upload"></i>
           </span>
-          <span class="text-success h5 h5-responsive" *ngIf="uploaded">
-            Video Uploaded
-            <i class="fas fa-check"></i>
-          </span>
+
         </ng-template>
       </p-fileUpload>
 
@@ -113,45 +111,52 @@
 
     </div>
     <div class="col-auto m-auto justify-content-center align-content-center">
-<div class="d-flex justify-content-center flex-md-row flex-colum">
-  <div class="p-2 flex-fill"><p-button label="Split Video" iconPos="right" icon="fas fa-expand" (click)="splitImagesFromVideo()"></p-button></div>
-  <div class="p-2 flex-fill"><p-button label="Predict" iconPos="right" icon="fas fa-industry" (click)="startPredictionProcess()"></p-button></div>
-  <div class="p-2 flex-fill"><p-button label="Get/Refresh Predicted" iconPos="right" icon="fas fa-external-link-alt" (click)="getProcessedImagesList()"></p-button></div>
-</div>
-     
+      <div class="d-flex justify-content-center flex-md-row flex-colum">
+        <div class="p-2 flex-fill">
+          <p-button label="Split Video" iconPos="right" icon="fas fa-expand" (click)="splitImagesFromVideo()">
+          </p-button>
+        </div>
+        <div class="p-2 flex-fill">
+          <p-button label="Predict" iconPos="right" icon="fas fa-industry" (click)="startPredictionProcess()">
+          </p-button>
+        </div>
+        <div class="p-2 flex-fill">
+          <p-button label="Get/Refresh Predicted" iconPos="right" icon="fas fa-external-link-alt"
+            (click)="getProcessedImagesList()"></p-button>
+        </div>
+      </div>
+
     </div>
   </section>
   <!-- End Search Bar -->
   <section class="row p-3">
     <!-- Card -->
-<div *ngFor="let image of processedImagesList | ImageListFilter: searchValue"
-      class="col-lg-3 col-sm-4 p-0 m-auto">
-    <div 
-      class="card m-3 hoverable">
+    <div *ngFor="let image of processedImagesList | ImageListFilter: searchValue" class="col-lg-3 col-sm-4 p-0 m-auto">
+      <div class="card m-3 hoverable">
 
-      <!-- Card image -->
-      <div class="view overlay">
-        <img class="card-img-top" style="height: 100%;object-fit: cover;" [src]="image.file_url" alt="Card image cap">
-        <a>
-          <div class="mask rgba-white-slight"></div>
+        <!-- Card image -->
+        <div class="view overlay">
+          <img class="card-img-top" style="height: 100%;object-fit: cover;" [src]="image.file_url" alt="Card image cap">
+          <a>
+            <div class="mask rgba-white-slight"></div>
 
-        </a>
+          </a>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body">
+
+          <!-- Title -->
+          <h4 class="card-title p-2 my-0 font-weight-bold">{{image.name}}</h4>
+
+          <h5 class="badg badge-primar p-3 m- h5 h5-responsive">pred: {{image.pred}}</h5>
+          <h5 class="badg badge-primar p-3 m- h5 h5-responsive">n: {{image.n}}</h5>
+
+        </div>
+
       </div>
-
-      <!-- Card content -->
-      <div class="card-body">
-
-        <!-- Title -->
-        <h4 class="card-title p-2 my-0 font-weight-bold">{{image.name}}</h4>
-
-        <h5 class="badg badge-primar p-3 m- h5 h5-responsive">pred: {{image.pred}}</h5>
-        <h5 class="badg badge-primar p-3 m- h5 h5-responsive">n: {{image.n}}</h5>
-
-      </div>
-
+      <!-- Card -->
     </div>
-    <!-- Card -->
-</div>
     <div class="col-auto jumbotron mt-5 mx-auto blue white-text"
       *ngIf="(processedImagesList | ImageListFilter: searchValue).length ===0 && searchValue">
       No images found in search list
