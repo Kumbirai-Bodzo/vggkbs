@@ -46,13 +46,12 @@ class VggProcess():
         return None
 
 
-
     def convert_tonumpy(self, image_input):
         from tensorflow.keras.preprocessing import image
 
         # Converts a PIL Image to 3D Numy Array
         x = image.img_to_array(image_input)
-        x.shape
+        x.shapes
         # Adding the fouth dimension, for number of images
         x = np.expand_dims(x, axis=0)
         return x

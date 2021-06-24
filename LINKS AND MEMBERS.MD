@@ -5,10 +5,11 @@
 
    WINSTON TAWANDIRWA R178503N
 
-2. LINKS
+2. Heroku Link
+   https://docking-vggkbs.herokuapp.com/
 
-video Link
-https://drive.google.com/file/d/1thvnLmRH1Q5RkoqT80uQ6EtiETxMkD_v/view?usp=sharing
+3. video Link
+   https://drive.google.com/file/d/1NFRXMd439mSGk3UhqpBA-s4cWc49uraY/view?usp=sharing
 
-Colab Link
-https://colab.research.google.com/drive/1bXIbqfvdkqgwAdzpntAsFrvO6GwgDrW8#scrollTo=CCOOz5mjlL28
+4. Colab Link
+   https://colab.research.google.com/drive/1bXIbqfvdkqgwAdzpntAsFrvO6GwgDrW8#scrollTo=CCOOz5mjlL28
