@@ -1,7 +1,7 @@
 1. MEMBERS
-   PHINEAS P JAMBAYA R178528EP
-
    KUMBIRAI BODZO R178506P
+
+   PHINEAS P JAMBAYA R178528EP
 
    WINSTON TAWANDIRWA R178503N
 
@@ -13,3 +13,5 @@
 
 4. Colab Link
    https://colab.research.google.com/drive/1bXIbqfvdkqgwAdzpntAsFrvO6GwgDrW8#scrollTo=CCOOz5mjlL28
+5. Github
+   https://github.com/Kumbirai-Bodzo/vggkbs
