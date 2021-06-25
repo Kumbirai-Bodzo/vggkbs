@@ -1,10 +1,3 @@
-import os
-import socket
-from datetime import timedelta
-
-# import cloudinary
-from corsheaders.defaults import default_headers
-from django.conf import settings
 
 REST_FRAMEWORK_FORMAT_FIELD_NAMES = 'capitalize'
 REST_FRAMEWORK_PLURALIZE_TYPES = True
@@ -16,7 +9,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAdminUser',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.permissions.IsAuthenticated',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),

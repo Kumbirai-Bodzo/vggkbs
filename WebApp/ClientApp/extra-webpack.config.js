@@ -33,33 +33,3 @@ module.exports = {
     },
 };
 
-// prod
-/*
-module.exports = {
-  context: __dirname,
-  output: {
-    path: require("path").resolve("./distro/dist/"),
-    filename: "[name]-[hash].js",
-    publicPath: baseProdHost + "/static/dist/",
-  },
-
-  plugins: [
-    new BundleTracker({
-      // path: __dirname,
-      path: require("path").resolve("../"),
-      filename: "webpack-stats-angular-prod.json",
-    }),
-  ],
-};
-devServer: {
-    port: 8000,
-    publicPath: baseLocalHost + "/static/dist/",
-    // hot: true,
-    headers: {
-      "Access-Control-Allow-Origin":
-        baseLocalHost + "/static/dist/" /**Django dev server *,
-    },
-  },
-
-
-*/

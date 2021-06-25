@@ -1,16 +1,5 @@
-/* You can add global styles to this file, and also import other style files 
-vendor/mdb-free-4.12.0/css/style.css
+/* You can add global styles to this file, and also import other style files */
 
-@import './assets/martine/css/animate.css';
-@import "../node_modules/@videogular/ngx-videogular/fonts/videogular.css";
-*/
-// @import "./assets/styles/custom/userAuth.scss";
-
-/*video angular*/
-// @import "../node_modules/ngx-videogular/fonts/videogular.css";
-/*Font Awesome
-@import "../node_modules/font-awesome/css/font-awesome.min.css";
-@import "../node_modules/font-awesome/css/font-awesome.min.css";*/
 @import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 @import "../node_modules/@fortawesome/fontawesome-free/css/svg-with-js.css";
 /*
@@ -20,18 +9,7 @@ MDB
 @import "../node_modules/mdbootstrap/css/mdb.min.css";
 @import "../node_modules/mdbootstrap/css/bootstrap.min.css";
 
-/*Other temp*/
-
 /* Prime NG
-@import "../node_modules/primeflex/primeflex.css";
-@import "../node_modules/primeng/resources/themes/nova-light/theme.css";
-@import "../node_modules/primeicons/primeicons.css";
-
-
-
-@import "../node_modules/primeflex/primeflex.css";
-fluent-light
-bootstrap4-light-blue
 */
 @import "../node_modules/primeicons/primeicons.css";
 @import "../node_modules/primeflex/primeflex.css";
@@ -44,7 +22,6 @@ bootstrap4-light-blue
 @import "../node_modules/@sweetalert2/themes/dark/dark.min.css";
 
 
-@import "./assets/styles/style.css";
 
 body {
   background-color: #ffffff;
@@ -55,53 +32,6 @@ p {
   color: black;
 }
 
-//   background-color:#224455;
-
-
-
-footer {
-  a:hover {
-    color: orangered !important;
-
-  }
-
-  h6 {
-    // color: darkblue;
-  }
-}
-
-.swal2-container {
-  display: -webkit-box;
-  z-index: 300000 !important;
-  display: flex;
-  position: fixed;
-}
-
-.social_icon:hover {
-  color: orangered !important;
-}
-
-.nav-link2:hover {
-  color: orangered !important;
-}
-
-.nav-item .nav-link:hover {
-  border-color: #33b5e5;
-  border-style: solid;
-  border-width: 0px 0px 5px 0px;
-  border-radius: 1px;
-
-  animation-name: animation;
-  animation-duration: 3s;
-  transition-property: unset;
-
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-in-out;
-}
-
-.nav-link.active {
-  color: orangered !important;
-}
 
 body {
   font-family: -apple-system,

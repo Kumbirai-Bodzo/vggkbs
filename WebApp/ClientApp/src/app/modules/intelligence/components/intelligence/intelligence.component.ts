@@ -13,15 +13,11 @@ import { IntelligenceService } from '../../services/intelligence.service';
 })
 export class IntelligenceComponent implements OnInit {
   uploadedFiles: any[] = [];
-  @ViewChild('galleria') galleria: Galleria;
-  galleryForm: FormGroup;
 
   // status variables
   uploading = null;
-  uploaded = false;
   uplodingValue;
   predicting = null;
-  //splitting
   spliting = null; // 0-spliting 1-done
   fetchingPredicted = null;
   //variables

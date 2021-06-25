@@ -27,35 +27,6 @@ export class IntelligenceService {
     return this.http.get<any>(this.splitImagesFromVideoUrl);
   }
   public uploadVideo(model): Observable<any> {
-    return this.http.post<any>(this.uploadVideoUrl, model, {
-      // headers: this.generalService.getHttpHeaders(),
-    });
+    return this.http.post<any>(this.uploadVideoUrl, model, {});
   }
-
-  // public acceptBookingStatus(id): Observable<any> {
-  //   const httpParams = new HttpParams().set('id', id);
-  //   // + '?id=' + id
-
-  //   return this.http.patch(
-  //     this.acceptBookingStatusUrl,
-  //     {},
-  //     {
-  //       //headers: this.generalService.getHttpHeaders(),
-  //       params: httpParams,
-  //     }
-  //   );
-  // }
-  // public acceptBookingStatus(id): Observable<any> {
-  //   const httpParams = new HttpParams().set('id', id);
-  //   // + '?id=' + id
-
-  //   return this.http.patch(
-  //     this.acceptBookingStatusUrl,
-  //     {},
-  //     {
-  //       //headers: this.generalService.getHttpHeaders(),
-  //       params: httpParams,
-  //     }
-  //   );
-  // }
 }

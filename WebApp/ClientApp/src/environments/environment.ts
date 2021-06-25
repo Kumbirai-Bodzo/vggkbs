@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:8000/api/',
   apiAssetsUrl: 'http://localhost:8000/static/',
-  token_key: 'vbtoken',
+  //token_key: 'vbtoken',
   // apiUrl: 'http://172.17.18.1:8000/'
   // apiUrl: 'http://192.168.43.230:8000/'
 

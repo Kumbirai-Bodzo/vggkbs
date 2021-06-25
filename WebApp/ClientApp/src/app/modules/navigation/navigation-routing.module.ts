@@ -6,7 +6,6 @@ const routes: Routes = [
   {
     path: '',
     component: IntelligenceComponent,
-    // outlet: "auth",
     loadChildren: () =>
       import('../intelligence/intelligence.module').then(
         (mod) => mod.IntelligenceModule

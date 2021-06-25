@@ -40,8 +40,6 @@ RUN pip install opencv-python
 RUN pip install dj-database-url
 RUN pip install -r requirements.txt
 
-#RUN pip install dj-database-url
-
 COPY . /app/
 
 # COPY [^ClientApp]* /app/

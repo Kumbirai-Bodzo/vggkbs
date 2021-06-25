@@ -11,17 +11,3 @@ release:
   image: web
   command:
     - python3 /app/manage.py migrate --settings=Configurations.settings.settings_prod
-
-
-
-    
-#r        - python3 /app/manage.py collectstatic --settings=VictoriaBookings.settings_prod
-# cd app && python3 manage.py migrate && gunicorn VictoriaBookings.wsgi:application --bind 0.0.0.0:$PORT
-#python /app/manage.py runserver 0.0.0.0:$PORT
-# cd app && python manage.py migrate --settings=VictoriaBookings.settings
-# gunicorn /app/VictoriaBookings.wsgi:application --bind 0.0.0.0:\8000
-# python3 /app/manage.py migrate --settings=VictoriaBookings.settings
-#gunicorn VictoriaBookings.wsgi:application --bind 0.0.0.0:\8000
-
-#cd app && gunicorn VictoriaBookings.wsgi:application --bind 0.0.0.0:\8000
-# gunicorn VictoriaBookings.wsgi:application --bind 0.0.0.0:$PORT --chdir /app/

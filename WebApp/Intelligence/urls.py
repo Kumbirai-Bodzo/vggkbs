@@ -10,8 +10,6 @@ from . import views
 
 urlpatterns = [
   path('post', views.UploadVideoView.as_view(), name='intelligence'),
- # path('get', views.IntelligenceView.as_view(), name='intelligence'),
-
   path('split-images', views.SplitImagesFromVideo.as_view(), name='split-images'),
   path('start-prediction', views.PredictView.as_view(), name='process-prediction'),
   path('predicted-list', views.PredictedListView.as_view(), name='predicted-list'),

@@ -4,6 +4,6 @@ export const environment = {
   production: true,
   apiUrl: base + '/api/',
   apiAssetsUrl: base + '/static/',
-  token_key: 'a1r4256378jdhhdshnprihsb',
+ // token_key: 'a1r4256378jdhhdshnprihsb',
 
 };
