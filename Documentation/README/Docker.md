@@ -5,7 +5,6 @@ docker pull ubuntu
 docker-compose build
 docker-compose up
 
-CMD gunicorn VictoriaApi.VictoriaApi.wsgi:application --bind 0.0.0.0:\$PORT
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 python manage.py runserver 0.0.0.0:8000
 docker-compose build
@@ -23,9 +22,9 @@ docker-compose down
 
 # os
 
-sudo docker save -o victoriabookings_api_image.docker victoriabookings_api
+sudo docker save -o vgg_api_image.docker vgg_api
 
-sudo docker load -i victoriabookings_api_image.docker
+sudo docker load -i vgg_api_image.docker
 
 # ubuntu
 
@@ -66,7 +65,7 @@ docker system prune
 
 1. Node 15
    docker pull node:14.15.0-alpine3.12
-   
+
    sudo docker save -o node15.0.1-alpine3.12_web_image.docker node
 
 sudo docker load -i node15.0.1-alpine3.12_web_image.docker
