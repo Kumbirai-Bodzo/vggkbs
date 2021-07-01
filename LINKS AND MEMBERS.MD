@@ -5,13 +5,14 @@
 
    WINSTON TAWANDIRWA R178503N
 
-2. Heroku Link
+2. Github
+   https://github.com/Kumbirai-Bodzo/vggkbs
+
+3. Heroku Link
    https://docking-vggkbs.herokuapp.com/
 
-3. video Link
-   https://drive.google.com/file/d/1NFRXMd439mSGk3UhqpBA-s4cWc49uraY/view?usp=sharing
+4. video Link
+   https://drive.google.com/file/d/1grI7PPMAH8CKGKwVN6-PQKshUkDJ6DSF/view?usp=sharing
 
-4. Colab Link
+5. Colab Link
    https://colab.research.google.com/drive/1bXIbqfvdkqgwAdzpntAsFrvO6GwgDrW8#scrollTo=CCOOz5mjlL28
-5. Github
-   https://github.com/Kumbirai-Bodzo/vggkbs
