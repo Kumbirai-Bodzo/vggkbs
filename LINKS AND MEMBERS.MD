@@ -1,10 +1,3 @@
-1. MEMBERS
-   KUMBIRAI BODZO R178506P
-
-   PHINEAS P JAMBAYA R178528EP
-
-   WINSTON TAWANDIRWA R178503N
-
 2. Github
    https://github.com/Kumbirai-Bodzo/vggkbs
 
